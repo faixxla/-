@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Process.h" // Тут знаходяться наші класи Phone, Tablet, Laptop
+#include "Process.h" // Тут знаходяться наші класи Phone, Tablet, Laptop 
 #include <vector>
 #include <string>
 
