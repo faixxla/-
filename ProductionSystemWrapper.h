@@ -1,21 +1,21 @@
-#pragma once
+п»ї#pragma once
 #include "ProductionSystem.h" 
 #include <msclr/marshal_cppstd.h>
 
 using namespace System;
 using namespace System::Collections::Generic;
 
-// Базовий клас для передачі даних у форми
+// Р‘Р°Р·РѕРІРёР№ РєР»Р°СЃ РґР»СЏ РїРµСЂРµРґР°С‡С– РґР°РЅРёС… Сѓ С„РѕСЂРјРё
 public ref class ElectronicsData
 {
 public:
-    property String^ Type;   // Тип (наприклад, "iPhone 13")
+    property String^ Type;   // РўРёРї (РЅР°РїСЂРёРєР»Р°Рґ, "iPhone 13")
     property String^ OS;     // iOS, Android
     property String^ Brand;  // Apple, Samsung
-    property double Price;   // Ціна
+    property double Price;   // Р¦С–РЅР°
 };
 
-// Клас даних для Телефону
+// РљР»Р°СЃ РґР°РЅРёС… РґР»СЏ РўРµР»РµС„РѕРЅСѓ
 public ref class PhoneData : public ElectronicsData
 {
 public:
@@ -24,7 +24,7 @@ public:
     property String^ Battery;
 };
 
-// Клас даних для Планшету
+// РљР»Р°СЃ РґР°РЅРёС… РґР»СЏ РџР»Р°РЅС€РµС‚Сѓ
 public ref class TabletData : public ElectronicsData
 {
 public:
@@ -33,7 +33,7 @@ public:
     property bool HasStylus;
 };
 
-// Клас даних для Ноутбука
+// РљР»Р°СЃ РґР°РЅРёС… РґР»СЏ РќРѕСѓС‚Р±СѓРєР°
 public ref class LaptopData : public ElectronicsData
 {
 public:
@@ -42,7 +42,7 @@ public:
     property String^ Wireless;
 };
 
-// Головний клас-обгортка (Wrapper)
+// Р“РѕР»РѕРІРЅРёР№ РєР»Р°СЃ-РѕР±РіРѕСЂС‚РєР° (Wrapper)
 public ref class ProductionSystemWrapper
 {
 private:
@@ -57,27 +57,27 @@ public:
     ~ProductionSystemWrapper();
     !ProductionSystemWrapper();
 
-    // Файлові операції
+    // Р¤Р°Р№Р»РѕРІС– РѕРїРµСЂР°С†С–С—
     void SaveToFile(String^ filename);
     void LoadFromFile(String^ filename);
 
-    // Отримання списків (для таблиць)
+    // РћС‚СЂРёРјР°РЅРЅСЏ СЃРїРёСЃРєС–РІ (РґР»СЏ С‚Р°Р±Р»РёС†СЊ)
     List<PhoneData^>^ GetAllPhones();
     List<TabletData^>^ GetAllTablets();
     List<LaptopData^>^ GetAllLaptops();
 
-    // Методи оновлення
+    // РњРµС‚РѕРґРё РѕРЅРѕРІР»РµРЅРЅСЏ
     bool UpdatePhone(String^ originalType, double price, double screen, String^ sim, String^ bat);
     bool UpdateTablet(String^ originalType, double price, String^ mem, String^ mat, bool stylus);
     bool UpdateLaptop(String^ originalType, double price, String^ keyb, String^ aud, String^ wire);
 
-    // Методи додавання
+    // РњРµС‚РѕРґРё РґРѕРґР°РІР°РЅРЅСЏ
     void AddPhone(PhoneData^ data);
     void AddTablet(TabletData^ data);
     void AddLaptop(LaptopData^ data);
 
-    // Спеціальні запити (твої обов'язкові методи)
-    List<PhoneData^>^ GetSingleSimPhones();     // Знайти телефони з 1 SIM
-    List<TabletData^>^ GetTabletsWithStylus();  // Знайти планшети зі стілусом
-    List<LaptopData^>^ GetLaptopsWithWifi();    // Знайти ноутбуки з Wi-Fi
+    // РЎРїРµС†С–Р°Р»СЊРЅС– Р·Р°РїРёС‚Рё (С‚РІРѕС— РѕР±РѕРІ'СЏР·РєРѕРІС– РјРµС‚РѕРґРё)
+    List<PhoneData^>^ GetSingleSimPhones();     // Р—РЅР°Р№С‚Рё С‚РµР»РµС„РѕРЅРё Р· 1 SIM
+    List<TabletData^>^ GetTabletsWithStylus();  // Р—РЅР°Р№С‚Рё РїР»Р°РЅС€РµС‚Рё Р·С– СЃС‚С–Р»СѓСЃРѕРј
+    List<LaptopData^>^ GetLaptopsWithWifi();    // Р—РЅР°Р№С‚Рё РЅРѕСѓС‚Р±СѓРєРё Р· Wi-Fi
 };

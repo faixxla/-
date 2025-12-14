@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "ProductionSystemWrapper.h"
 
 namespace CW {
@@ -13,7 +13,7 @@ namespace CW {
     public ref class AddEditAssemblyForm : public System::Windows::Forms::Form
     {
     public:
-        property PhoneData^ ResultData; // Çì³íèëè íà PhoneData
+        property PhoneData^ ResultData; // Ð—Ð¼Ñ–Ð½Ð¸Ð»Ð¸ Ð½Ð° PhoneData
 
         AddEditAssemblyForm(PhoneData^ inputData)
         {
@@ -21,11 +21,11 @@ namespace CW {
             ResultData = inputData;
 
             if (inputData != nullptr) {
-                this->Text = "Ðåäàãóâàòè Òåëåôîí: " + inputData->Type;
+                this->Text = "Ð ÐµÐ´Ð°Ð³ÑƒÐ²Ð°Ñ‚Ð¸ Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½: " + inputData->Type;
 
-                // Çàïîâíþºìî ïîëÿ
+                // Ð—Ð°Ð¿Ð¾Ð²Ð½ÑŽÑ”Ð¼Ð¾ Ð¿Ð¾Ð»Ñ
                 txtType->Text = inputData->Type;
-                txtType->ReadOnly = true; // Òèï (ÿê ID) íå çì³íþºìî ïðè ðåäàãóâàíí³
+                txtType->ReadOnly = true; // Ð¢Ð¸Ð¿ (ÑÐº ID) Ð½Ðµ Ð·Ð¼Ñ–Ð½ÑŽÑ”Ð¼Ð¾ Ð¿Ñ€Ð¸ Ñ€ÐµÐ´Ð°Ð³ÑƒÐ²Ð°Ð½Ð½Ñ–
 
                 txtOS->Text = inputData->OS;
                 txtBrand->Text = inputData->Brand;
@@ -35,7 +35,7 @@ namespace CW {
                 txtBattery->Text = inputData->Battery;
             }
             else {
-                this->Text = "Äîäàòè íîâèé Òåëåôîí";
+                this->Text = "Ð”Ð¾Ð´Ð°Ñ‚Ð¸ Ð½Ð¾Ð²Ð¸Ð¹ Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½";
                 txtType->ReadOnly = false;
             }
         }
@@ -46,7 +46,7 @@ namespace CW {
             if (components) delete components;
         }
 
-        // --- Ïîëÿ ôîðìè ---
+        // --- ÐŸÐ¾Ð»Ñ Ñ„Ð¾Ñ€Ð¼Ð¸ ---
     private: System::Windows::Forms::Label^ lblType;
     private: System::Windows::Forms::TextBox^ txtType;
     private: System::Windows::Forms::Label^ lblOS;
@@ -56,7 +56,7 @@ namespace CW {
     private: System::Windows::Forms::Label^ lblPrice;
     private: System::Windows::Forms::TextBox^ txtPrice;
 
-           // Ñïåöèô³÷í³ äëÿ òåëåôîíó
+           // Ð¡Ð¿ÐµÑ†Ð¸Ñ„Ñ–Ñ‡Ð½Ñ– Ð´Ð»Ñ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ñƒ
     private: System::Windows::Forms::Label^ lblScreen;
     private: System::Windows::Forms::TextBox^ txtScreen;
     private: System::Windows::Forms::Label^ lblSim;
@@ -75,42 +75,42 @@ namespace CW {
                this->ClientSize = System::Drawing::Size(400, 350);
                this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
                this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
-               this->Text = L"Òåëåôîí";
+               this->Text = L"Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½";
 
                int y = 20; int lblW = 120; int txtW = 200; int gap = 35;
 
                // Type
-               lblType = gcnew Label(); lblType->Text = "Ìîäåëü (Type):"; lblType->Location = Point(10, y); lblType->Size = System::Drawing::Size(lblW, 20);
+               lblType = gcnew Label(); lblType->Text = "ÐœÐ¾Ð´ÐµÐ»ÑŒ (Type):"; lblType->Location = Point(10, y); lblType->Size = System::Drawing::Size(lblW, 20);
                txtType = gcnew TextBox(); txtType->Location = Point(140, y); txtType->Size = System::Drawing::Size(txtW, 20);
                this->Controls->Add(lblType); this->Controls->Add(txtType); y += gap;
 
                // OS
-               lblOS = gcnew Label(); lblOS->Text = "ÎÑ (Android/iOS):"; lblOS->Location = Point(10, y); lblOS->Size = System::Drawing::Size(lblW, 20);
+               lblOS = gcnew Label(); lblOS->Text = "ÐžÐ¡ (Android/iOS):"; lblOS->Location = Point(10, y); lblOS->Size = System::Drawing::Size(lblW, 20);
                txtOS = gcnew TextBox(); txtOS->Location = Point(140, y); txtOS->Size = System::Drawing::Size(txtW, 20);
                this->Controls->Add(lblOS); this->Controls->Add(txtOS); y += gap;
 
                // Brand
-               lblBrand = gcnew Label(); lblBrand->Text = "Áðåíä:"; lblBrand->Location = Point(10, y); lblBrand->Size = System::Drawing::Size(lblW, 20);
+               lblBrand = gcnew Label(); lblBrand->Text = "Ð‘Ñ€ÐµÐ½Ð´:"; lblBrand->Location = Point(10, y); lblBrand->Size = System::Drawing::Size(lblW, 20);
                txtBrand = gcnew TextBox(); txtBrand->Location = Point(140, y); txtBrand->Size = System::Drawing::Size(txtW, 20);
                this->Controls->Add(lblBrand); this->Controls->Add(txtBrand); y += gap;
 
                // Price
-               lblPrice = gcnew Label(); lblPrice->Text = "Ö³íà:"; lblPrice->Location = Point(10, y); lblPrice->Size = System::Drawing::Size(lblW, 20);
+               lblPrice = gcnew Label(); lblPrice->Text = "Ð¦Ñ–Ð½Ð°:"; lblPrice->Location = Point(10, y); lblPrice->Size = System::Drawing::Size(lblW, 20);
                txtPrice = gcnew TextBox(); txtPrice->Location = Point(140, y); txtPrice->Size = System::Drawing::Size(txtW, 20);
                this->Controls->Add(lblPrice); this->Controls->Add(txtPrice); y += gap;
 
                // Screen
-               lblScreen = gcnew Label(); lblScreen->Text = "Ä³àãîíàëü:"; lblScreen->Location = Point(10, y); lblScreen->Size = System::Drawing::Size(lblW, 20);
+               lblScreen = gcnew Label(); lblScreen->Text = "Ð”Ñ–Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒ:"; lblScreen->Location = Point(10, y); lblScreen->Size = System::Drawing::Size(lblW, 20);
                txtScreen = gcnew TextBox(); txtScreen->Location = Point(140, y); txtScreen->Size = System::Drawing::Size(txtW, 20);
                this->Controls->Add(lblScreen); this->Controls->Add(txtScreen); y += gap;
 
                // SIM
-               lblSim = gcnew Label(); lblSim->Text = "Òèï SIM:"; lblSim->Location = Point(10, y); lblSim->Size = System::Drawing::Size(lblW, 20);
+               lblSim = gcnew Label(); lblSim->Text = "Ð¢Ð¸Ð¿ SIM:"; lblSim->Location = Point(10, y); lblSim->Size = System::Drawing::Size(lblW, 20);
                txtSim = gcnew TextBox(); txtSim->Location = Point(140, y); txtSim->Size = System::Drawing::Size(txtW, 20);
                this->Controls->Add(lblSim); this->Controls->Add(txtSim); y += gap;
 
                // Battery
-               lblBattery = gcnew Label(); lblBattery->Text = "Áàòàðåÿ:"; lblBattery->Location = Point(10, y); lblBattery->Size = System::Drawing::Size(lblW, 20);
+               lblBattery = gcnew Label(); lblBattery->Text = "Ð‘Ð°Ñ‚Ð°Ñ€ÐµÑ:"; lblBattery->Location = Point(10, y); lblBattery->Size = System::Drawing::Size(lblW, 20);
                txtBattery = gcnew TextBox(); txtBattery->Location = Point(140, y); txtBattery->Size = System::Drawing::Size(txtW, 20);
                this->Controls->Add(lblBattery); this->Controls->Add(txtBattery); y += gap + 10;
 
@@ -127,14 +127,14 @@ namespace CW {
 
     private: System::Void btnOK_Click(System::Object^ sender, System::EventArgs^ e) {
         try {
-            // Âàë³äàö³ÿ
+            // Ð’Ð°Ð»Ñ–Ð´Ð°Ñ†Ñ–Ñ
             if (String::IsNullOrWhiteSpace(txtType->Text) || String::IsNullOrWhiteSpace(txtBrand->Text))
-                throw gcnew Exception("Ïîëÿ 'Ìîäåëü' òà 'Áðåíä' îáîâ'ÿçêîâ³!");
+                throw gcnew Exception("ÐŸÐ¾Ð»Ñ 'ÐœÐ¾Ð´ÐµÐ»ÑŒ' Ñ‚Ð° 'Ð‘Ñ€ÐµÐ½Ð´' Ð¾Ð±Ð¾Ð²'ÑÐ·ÐºÐ¾Ð²Ñ–!");
 
             double price = Double::Parse(txtPrice->Text);
             double screen = Double::Parse(txtScreen->Text);
 
-            if (price < 0 || screen <= 0) throw gcnew Exception("Ö³íà òà åêðàí ìàþòü áóòè äîäàòí³ìè ÷èñëàìè.");
+            if (price < 0 || screen <= 0) throw gcnew Exception("Ð¦Ñ–Ð½Ð° Ñ‚Ð° ÐµÐºÑ€Ð°Ð½ Ð¼Ð°ÑŽÑ‚ÑŒ Ð±ÑƒÑ‚Ð¸ Ð´Ð¾Ð´Ð°Ñ‚Ð½Ñ–Ð¼Ð¸ Ñ‡Ð¸ÑÐ»Ð°Ð¼Ð¸.");
 
             if (ResultData == nullptr) ResultData = gcnew PhoneData();
 
@@ -149,7 +149,7 @@ namespace CW {
             this->Close();
         }
         catch (Exception^ ex) {
-            MessageBox::Show("Ïîìèëêà: " + ex->Message);
+            MessageBox::Show("ÐŸÐ¾Ð¼Ð¸Ð»ÐºÐ°: " + ex->Message);
             this->DialogResult = System::Windows::Forms::DialogResult::None;
         }
     }

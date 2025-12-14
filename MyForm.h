@@ -1,7 +1,7 @@
-#pragma once
-#include "AddEditPackagingForm.h" // “ÂÔÂ ˆÂ ÙÓÏ‡ ‰Îˇ ÕÓÛÚ·ÛÍ‡
-#include "AddEditTestingForm.h"   // “ÂÔÂ ˆÂ ÙÓÏ‡ ‰Îˇ œÎ‡Ì¯ÂÚ‡
-#include "AddEditAssemblyForm.h"  // “ÂÔÂ ˆÂ ÙÓÏ‡ ‰Îˇ “ÂÎÂÙÓÌ‡
+Ôªø#pragma once
+#include "AddEditPackagingForm.h" // –¢–µ–ø–µ—Ä —Ü–µ —Ñ–æ—Ä–º–∞ –¥–ª—è –ù–æ—É—Ç–±—É–∫–∞
+#include "AddEditTestingForm.h"   // –¢–µ–ø–µ—Ä —Ü–µ —Ñ–æ—Ä–º–∞ –¥–ª—è –ü–ª–∞–Ω—à–µ—Ç–∞
+#include "AddEditAssemblyForm.h"  // –¢–µ–ø–µ—Ä —Ü–µ —Ñ–æ—Ä–º–∞ –¥–ª—è –¢–µ–ª–µ—Ñ–æ–Ω–∞
 #include "ProductionSystemWrapper.h"
 
 namespace CW {
@@ -24,13 +24,13 @@ namespace CW {
 			SetupAllControls();
 
 			try {
-				// «‡‚‡ÌÚ‡ÊÛ∫ÏÓ ‰‡Ì≥ ÔË ÒÚ‡Ú≥
+				// –ó–∞–≤–∞–Ω—Ç–∞–∂—É—î–º–æ –¥–∞–Ω—ñ –ø—Ä–∏ —Å—Ç–∞—Ä—Ç—ñ
 				wrapper->LoadFromFile(L"electronics_store.txt");
 			}
 			catch (Exception^ ex) {
-				// ≤„ÌÓÛ∫ÏÓ ÔÓÏËÎÍÛ ÔË ÔÂ¯ÓÏÛ Á‡ÔÛÒÍÛ, ˇÍ˘Ó Ù‡ÈÎÛ ÌÂÏ‡∫
+				// –Ü–≥–Ω–æ—Ä—É—î–º–æ –ø–æ–º–∏–ª–∫—É –ø—Ä–∏ –ø–µ—Ä—à–æ–º—É –∑–∞–ø—É—Å–∫—É, —è–∫—â–æ —Ñ–∞–π–ª—É –Ω–µ–º–∞—î
 			}
-			ShowPhoneView(); // —Ú‡ÚÛ∫ÏÓ Á ‚ÍÎ‡‰ÍË “ÂÎÂÙÓÌ≥‚
+			ShowPhoneView(); // –°—Ç–∞—Ä—Ç—É—î–º–æ –∑ –≤–∫–ª–∞–¥–∫–∏ –¢–µ–ª–µ—Ñ–æ–Ω—ñ–≤
 		}
 
 	protected:
@@ -42,23 +42,23 @@ namespace CW {
 	private: ProductionSystemWrapper^ wrapper;
 	private: System::Windows::Forms::DataGridView^ mainDataGridView;
 
-		   // ---  ÌÓÔÍË ‰≥È ---
-	private: System::Windows::Forms::Button^ btnSingleSim; // ¡ÛÎÓ MaxDuration
+		   // --- –ö–Ω–æ–ø–∫–∏ –¥—ñ–π ---
+	private: System::Windows::Forms::Button^ btnSingleSim; // –ë—É–ª–æ MaxDuration
 	private: System::Windows::Forms::Button^ btnAddPhone;
 	private: System::Windows::Forms::Button^ btnEditPhone;
 
-	private: System::Windows::Forms::Button^ btnFindStylus; // ¡ÛÎÓ AnalyzeTests
+	private: System::Windows::Forms::Button^ btnFindStylus; // –ë—É–ª–æ AnalyzeTests
 	private: System::Windows::Forms::Button^ btnAddTablet;
 	private: System::Windows::Forms::Button^ btnEditTablet;
 
-	private: System::Windows::Forms::Button^ btnFindWifi;   // ¡ÛÎÓ FindPacking
+	private: System::Windows::Forms::Button^ btnFindWifi;   // –ë—É–ª–æ FindPacking
 	private: System::Windows::Forms::Button^ btnAddLaptop;
 	private: System::Windows::Forms::Button^ btnEditLaptop;
 
 	private: System::Windows::Forms::Button^ btnSave;
 	private: System::Windows::Forms::Button^ btnLoad;
 
-		   // --- ≈ÎÂÏÂÌÚË ‰ËÁ‡ÈÌÛ (ÏÂÌ˛ ÁÎ≥‚‡) ---
+		   // --- –ï–ª–µ–º–µ–Ω—Ç–∏ –¥–∏–∑–∞–π–Ω—É (–º–µ–Ω—é –∑–ª—ñ–≤–∞) ---
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Button^ btnMenuPhone;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
@@ -69,14 +69,14 @@ namespace CW {
 	private: System::Windows::Forms::PictureBox^ pictureBox8;
 	private: System::Windows::Forms::PictureBox^ pictureBox9;
 
-		   // --- «‡„ÓÎÓ‚ÍË ---
+		   // --- –ó–∞–≥–æ–ª–æ–≤–∫–∏ ---
 	private: System::Windows::Forms::Label^ lblHeaderPhone;
 	private: System::Windows::Forms::Label^ lblHeaderTablet;
 	private: System::Windows::Forms::Label^ lblHeaderLaptop;
 
 	private: System::ComponentModel::IContainer^ components;
 
-		   // --- ƒÓÔÓÏ≥ÊÌ≥ ÏÂÚÓ‰Ë ---
+		   // --- –î–æ–ø–æ–º—ñ–∂–Ω—ñ –º–µ—Ç–æ–¥–∏ ---
 
 		   void LoadDataGrid(System::Collections::IEnumerable^ dataList)
 		   {
@@ -86,19 +86,19 @@ namespace CW {
 		   }
 
 		   void HideAllFunctionalControls() {
-			   // ’Ó‚‡∫ÏÓ ÍÌÓÔÍË ÚÂÎÂÙÓÌ≥‚
+			   // –•–æ–≤–∞—î–º–æ –∫–Ω–æ–ø–∫–∏ —Ç–µ–ª–µ—Ñ–æ–Ω—ñ–≤
 			   btnSingleSim->Visible = false;
 			   btnAddPhone->Visible = false;
 			   btnEditPhone->Visible = false;
 			   lblHeaderPhone->Visible = false;
 
-			   // ’Ó‚‡∫ÏÓ ÍÌÓÔÍË ÔÎ‡Ì¯ÂÚ≥‚
+			   // –•–æ–≤–∞—î–º–æ –∫–Ω–æ–ø–∫–∏ –ø–ª–∞–Ω—à–µ—Ç—ñ–≤
 			   btnFindStylus->Visible = false;
 			   btnAddTablet->Visible = false;
 			   btnEditTablet->Visible = false;
 			   lblHeaderTablet->Visible = false;
 
-			   // ’Ó‚‡∫ÏÓ ÍÌÓÔÍË ÌÓÛÚ·ÛÍ≥‚
+			   // –•–æ–≤–∞—î–º–æ –∫–Ω–æ–ø–∫–∏ –Ω–æ—É—Ç–±—É–∫—ñ–≤
 			   btnFindWifi->Visible = false;
 			   btnAddLaptop->Visible = false;
 			   btnEditLaptop->Visible = false;
@@ -133,7 +133,7 @@ namespace CW {
 		   }
 
 		   void SetupAllControls() {
-			   // ŒÒÌÓ‚Ì‡ Ú‡·ÎËˆˇ
+			   // –û—Å–Ω–æ–≤–Ω–∞ —Ç–∞–±–ª–∏—Ü—è
 			   mainDataGridView = gcnew System::Windows::Forms::DataGridView();
 			   mainDataGridView->Location = System::Drawing::Point(370, 100);
 			   mainDataGridView->Size = System::Drawing::Size(768, 300);
@@ -144,82 +144,82 @@ namespace CW {
 			   int y_pos = 410;
 			   int x_pos = 370;
 
-			   // === “≈À≈‘ŒÕ» ===
+			   // === –¢–ï–õ–ï–§–û–ù–ò ===
 			   btnSingleSim = gcnew System::Windows::Forms::Button();
-			   btnSingleSim->Text = L"«Ì‡ÈÚË Á 1 SIM-Í‡ÚÓ˛";
+			   btnSingleSim->Text = L"–ó–Ω–∞–π—Ç–∏ –∑ 1 SIM-–∫–∞—Ä—Ç–æ—é";
 			   btnSingleSim->Location = System::Drawing::Point(x_pos, y_pos);
 			   btnSingleSim->Size = System::Drawing::Size(200, 40);
 			   btnSingleSim->Click += gcnew System::EventHandler(this, &MyForm::btnSingleSim_Click);
 			   this->Controls->Add(btnSingleSim);
 
 			   btnAddPhone = gcnew System::Windows::Forms::Button();
-			   btnAddPhone->Text = L"ƒÓ‰‡ÚË “ÂÎÂÙÓÌ";
+			   btnAddPhone->Text = L"–î–æ–¥–∞—Ç–∏ –¢–µ–ª–µ—Ñ–æ–Ω";
 			   btnAddPhone->Location = System::Drawing::Point(x_pos + 210, y_pos);
 			   btnAddPhone->Size = System::Drawing::Size(150, 40);
 			   btnAddPhone->Click += gcnew System::EventHandler(this, &MyForm::btnAddPhone_Click);
 			   this->Controls->Add(btnAddPhone);
 
 			   btnEditPhone = gcnew System::Windows::Forms::Button();
-			   btnEditPhone->Text = L"–Â‰‡„Û‚‡ÚË";
+			   btnEditPhone->Text = L"–†–µ–¥–∞–≥—É–≤–∞—Ç–∏";
 			   btnEditPhone->Location = System::Drawing::Point(x_pos + 370, y_pos);
 			   btnEditPhone->Size = System::Drawing::Size(150, 40);
 			   btnEditPhone->Click += gcnew System::EventHandler(this, &MyForm::btnEditPhone_Click);
 			   this->Controls->Add(btnEditPhone);
 
-			   // === œÀ¿Õÿ≈“» ===
+			   // === –ü–õ–ê–ù–®–ï–¢–ò ===
 			   btnFindStylus = gcnew System::Windows::Forms::Button();
-			   btnFindStylus->Text = L"œÂÂ‚≥Í‡ Ì‡ˇ‚ÌÓÒÚ≥ ÒÚ≥ÎÛÒ‡";
+			   btnFindStylus->Text = L"–ü–µ—Ä–µ–≤—ñ—Ä–∫–∞ –Ω–∞—è–≤–Ω–æ—Å—Ç—ñ —Å—Ç—ñ–ª—É—Å–∞";
 			   btnFindStylus->Location = System::Drawing::Point(x_pos, y_pos);
 			   btnFindStylus->Size = System::Drawing::Size(200, 40);
 			   btnFindStylus->Click += gcnew System::EventHandler(this, &MyForm::btnFindStylus_Click);
 			   this->Controls->Add(btnFindStylus);
 
 			   btnAddTablet = gcnew System::Windows::Forms::Button();
-			   btnAddTablet->Text = L"ƒÓ‰‡ÚË œÎ‡Ì¯ÂÚ";
+			   btnAddTablet->Text = L"–î–æ–¥–∞—Ç–∏ –ü–ª–∞–Ω—à–µ—Ç";
 			   btnAddTablet->Location = System::Drawing::Point(x_pos + 210, y_pos);
 			   btnAddTablet->Size = System::Drawing::Size(150, 40);
 			   btnAddTablet->Click += gcnew System::EventHandler(this, &MyForm::btnAddTablet_Click);
 			   this->Controls->Add(btnAddTablet);
 
 			   btnEditTablet = gcnew System::Windows::Forms::Button();
-			   btnEditTablet->Text = L"–Â‰‡„Û‚‡ÚË";
+			   btnEditTablet->Text = L"–†–µ–¥–∞–≥—É–≤–∞—Ç–∏";
 			   btnEditTablet->Location = System::Drawing::Point(x_pos + 370, y_pos);
 			   btnEditTablet->Size = System::Drawing::Size(150, 40);
 			   btnEditTablet->Click += gcnew System::EventHandler(this, &MyForm::btnEditTablet_Click);
 			   this->Controls->Add(btnEditTablet);
 
-			   // === ÕŒ”“¡” » ===
+			   // === –ù–û–£–¢–ë–£–ö–ò ===
 			   btnFindWifi = gcnew System::Windows::Forms::Button();
-			   btnFindWifi->Text = L"œÂÂ‚≥Í‡ Ô≥‰ÚËÏÍË Wi-Fi";
+			   btnFindWifi->Text = L"–ü–µ—Ä–µ–≤—ñ—Ä–∫–∞ –ø—ñ–¥—Ç—Ä–∏–º–∫–∏ Wi-Fi";
 			   btnFindWifi->Location = System::Drawing::Point(x_pos, y_pos);
 			   btnFindWifi->Size = System::Drawing::Size(200, 40);
 			   btnFindWifi->Click += gcnew System::EventHandler(this, &MyForm::btnFindWifi_Click);
 			   this->Controls->Add(btnFindWifi);
 
 			   btnAddLaptop = gcnew System::Windows::Forms::Button();
-			   btnAddLaptop->Text = L"ƒÓ‰‡ÚË ÕÓÛÚ·ÛÍ";
+			   btnAddLaptop->Text = L"–î–æ–¥–∞—Ç–∏ –ù–æ—É—Ç–±—É–∫";
 			   btnAddLaptop->Location = System::Drawing::Point(x_pos + 210, y_pos);
 			   btnAddLaptop->Size = System::Drawing::Size(150, 40);
 			   btnAddLaptop->Click += gcnew System::EventHandler(this, &MyForm::btnAddLaptop_Click);
 			   this->Controls->Add(btnAddLaptop);
 
 			   btnEditLaptop = gcnew System::Windows::Forms::Button();
-			   btnEditLaptop->Text = L"–Â‰‡„Û‚‡ÚË";
+			   btnEditLaptop->Text = L"–†–µ–¥–∞–≥—É–≤–∞—Ç–∏";
 			   btnEditLaptop->Location = System::Drawing::Point(x_pos + 370, y_pos);
 			   btnEditLaptop->Size = System::Drawing::Size(150, 40);
 			   btnEditLaptop->Click += gcnew System::EventHandler(this, &MyForm::btnEditLaptop_Click);
 			   this->Controls->Add(btnEditLaptop);
 
-			   // === «¿√¿À‹Õ≤ ===
+			   // === –ó–ê–ì–ê–õ–¨–ù–Ü ===
 			   btnSave = gcnew System::Windows::Forms::Button();
-			   btnSave->Text = L"«·ÂÂ„ÚË Û Ù‡ÈÎ";
+			   btnSave->Text = L"–ó–±–µ—Ä–µ–≥—Ç–∏ —É —Ñ–∞–π–ª";
 			   btnSave->Location = System::Drawing::Point(x_pos, y_pos + 50);
 			   btnSave->Size = System::Drawing::Size(200, 40);
 			   btnSave->Click += gcnew System::EventHandler(this, &MyForm::btnSave_Click);
 			   this->Controls->Add(btnSave);
 
 			   btnLoad = gcnew System::Windows::Forms::Button();
-			   btnLoad->Text = L"«‡‚‡ÌÚ‡ÊËÚË";
+			   btnLoad->Text = L"–ó–∞–≤–∞–Ω—Ç–∞–∂–∏—Ç–∏";
 			   btnLoad->Location = System::Drawing::Point(x_pos + 210, y_pos + 50);
 			   btnLoad->Size = System::Drawing::Size(200, 40);
 			   btnLoad->Click += gcnew System::EventHandler(this, &MyForm::btnLoad_Click);
@@ -271,7 +271,7 @@ namespace CW {
 			   this->btnMenuPhone->Name = L"btnMenuPhone";
 			   this->btnMenuPhone->Size = System::Drawing::Size(378, 53);
 			   this->btnMenuPhone->TabIndex = 1;
-			   this->btnMenuPhone->Text = L"“ÂÎÂÙÓÌË";
+			   this->btnMenuPhone->Text = L"–¢–µ–ª–µ—Ñ–æ–Ω–∏";
 			   this->btnMenuPhone->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			   this->btnMenuPhone->UseVisualStyleBackColor = false;
 			   this->btnMenuPhone->Click += gcnew System::EventHandler(this, &MyForm::btnMenuPhone_Click);
@@ -302,7 +302,7 @@ namespace CW {
 			   this->btnMenuTablet->Name = L"btnMenuTablet";
 			   this->btnMenuTablet->Size = System::Drawing::Size(376, 53);
 			   this->btnMenuTablet->TabIndex = 3;
-			   this->btnMenuTablet->Text = L"œÎ‡Ì¯ÂÚË";
+			   this->btnMenuTablet->Text = L"–ü–ª–∞–Ω—à–µ—Ç–∏";
 			   this->btnMenuTablet->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			   this->btnMenuTablet->UseVisualStyleBackColor = false;
 			   this->btnMenuTablet->Click += gcnew System::EventHandler(this, &MyForm::btnMenuTablet_Click);
@@ -325,7 +325,7 @@ namespace CW {
 			   this->btnMenuLaptop->Name = L"btnMenuLaptop";
 			   this->btnMenuLaptop->Size = System::Drawing::Size(377, 53);
 			   this->btnMenuLaptop->TabIndex = 5;
-			   this->btnMenuLaptop->Text = L"ÕÓÛÚ·ÛÍË";
+			   this->btnMenuLaptop->Text = L"–ù–æ—É—Ç–±—É–∫–∏";
 			   this->btnMenuLaptop->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			   this->btnMenuLaptop->UseVisualStyleBackColor = false;
 			   this->btnMenuLaptop->Click += gcnew System::EventHandler(this, &MyForm::btnMenuLaptop_Click);
@@ -360,7 +360,7 @@ namespace CW {
 			   this->lblHeaderPhone->Name = L"lblHeaderPhone";
 			   this->lblHeaderPhone->Size = System::Drawing::Size(212, 59);
 			   this->lblHeaderPhone->TabIndex = 15;
-			   this->lblHeaderPhone->Text = L"“ÂÎÂÙÓÌË";
+			   this->lblHeaderPhone->Text = L"–¢–µ–ª–µ—Ñ–æ–Ω–∏";
 			   // 
 			   // lblHeaderTablet
 			   // 
@@ -372,7 +372,7 @@ namespace CW {
 			   this->lblHeaderTablet->Name = L"lblHeaderTablet";
 			   this->lblHeaderTablet->Size = System::Drawing::Size(165, 59);
 			   this->lblHeaderTablet->TabIndex = 15;
-			   this->lblHeaderTablet->Text = L"œÎ‡Ì¯ÂÚË";
+			   this->lblHeaderTablet->Text = L"–ü–ª–∞–Ω—à–µ—Ç–∏";
 			   // 
 			   // lblHeaderLaptop
 			   // 
@@ -384,7 +384,7 @@ namespace CW {
 			   this->lblHeaderLaptop->Name = L"lblHeaderLaptop";
 			   this->lblHeaderLaptop->Size = System::Drawing::Size(176, 59);
 			   this->lblHeaderLaptop->TabIndex = 15;
-			   this->lblHeaderLaptop->Text = L"ÕÓÛÚ·ÛÍË";
+			   this->lblHeaderLaptop->Text = L"–ù–æ—É—Ç–±—É–∫–∏";
 			   // 
 			   // MyForm
 			   // 
@@ -405,7 +405,7 @@ namespace CW {
 			   this->Controls->Add(this->pictureBox8);
 			   this->Controls->Add(this->pictureBox9);
 			   this->Name = L"MyForm";
-			   this->Text = L"Ã‡„‡ÁËÌ ≈ÎÂÍÚÓÌ≥ÍË";
+			   this->Text = L"–ú–∞–≥–∞–∑–∏–Ω –ï–ª–µ–∫—Ç—Ä–æ–Ω—ñ–∫–∏";
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
@@ -417,7 +417,7 @@ namespace CW {
 
 		   }
 
-		   // --- Ã≈Õﬁ (œ≈–≈Ã» ¿ÕÕﬂ ¬≤ ŒÕ) ---
+		   // --- –ú–ï–ù–Æ (–ü–ï–†–ï–ú–ò–ö–ê–ù–ù–Ø –í–Ü–ö–û–ù) ---
 	private: System::Void btnMenuPhone_Click(System::Object^ sender, System::EventArgs^ e) {
 		ShowPhoneView();
 	}
@@ -428,14 +428,14 @@ namespace CW {
 		ShowLaptopView();
 	}
 
-		   // --- ÀŒ√≤ ¿ “≈À≈‘ŒÕ≤¬ ---
+		   // --- –õ–û–ì–Ü–ö–ê –¢–ï–õ–ï–§–û–ù–Ü–í ---
 	private: System::Void btnAddPhone_Click(System::Object^ sender, System::EventArgs^ e) {
-		// ¬ËÍÎËÍ‡∫ÏÓ ÙÓÏÛ (ÍÓÎË¯Ìˇ AssemblyForm)
+		// –í–∏–∫–ª–∏–∫–∞—î–º–æ —Ñ–æ—Ä–º—É (–∫–æ–ª–∏—à–Ω—è AssemblyForm)
 		AddEditAssemblyForm^ form = gcnew AddEditAssemblyForm(nullptr);
 		if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			wrapper->AddPhone(form->ResultData);
 			ShowPhoneView();
-			MessageBox::Show("“ÂÎÂÙÓÌ ÛÒÔ≥¯ÌÓ ‰Ó‰‡ÌÓ!");
+			MessageBox::Show("–¢–µ–ª–µ—Ñ–æ–Ω —É—Å–ø—ñ—à–Ω–æ –¥–æ–¥–∞–Ω–æ!");
 		}
 	}
 	private: System::Void btnEditPhone_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -448,14 +448,14 @@ namespace CW {
 				ShowPhoneView();
 			}
 		}
-		catch (...) { MessageBox::Show("œÓÏËÎÍ‡ ‚Ë·ÓÛ."); }
+		catch (...) { MessageBox::Show("–ü–æ–º–∏–ª–∫–∞ –≤–∏–±–æ—Ä—É."); }
 	}
 	private: System::Void btnSingleSim_Click(System::Object^ sender, System::EventArgs^ e) {
 		LoadDataGrid(wrapper->GetSingleSimPhones());
-		MessageBox::Show("¬≥‰Ó·‡ÊÂÌÓ ÚÂÎÂÙÓÌË, ˇÍ≥ Ô≥‰ÚËÏÛ˛Ú¸ ÎË¯Â 1 SIM-Í‡ÚÛ.");
+		MessageBox::Show("–í—ñ–¥–æ–±—Ä–∞–∂–µ–Ω–æ —Ç–µ–ª–µ—Ñ–æ–Ω–∏, —è–∫—ñ –ø—ñ–¥—Ç—Ä–∏–º—É—é—Ç—å –ª–∏—à–µ 1 SIM-–∫–∞—Ä—Ç—É.");
 	}
 
-		   // --- ÀŒ√≤ ¿ œÀ¿Õÿ≈“≤¬ ---
+		   // --- –õ–û–ì–Ü–ö–ê –ü–õ–ê–ù–®–ï–¢–Ü–í ---
 	private: System::Void btnAddTablet_Click(System::Object^ sender, System::EventArgs^ e) {
 		AddEditTestingForm^ form = gcnew AddEditTestingForm(nullptr);
 		if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
@@ -477,10 +477,10 @@ namespace CW {
 	}
 	private: System::Void btnFindStylus_Click(System::Object^ sender, System::EventArgs^ e) {
 		LoadDataGrid(wrapper->GetTabletsWithStylus());
-		MessageBox::Show("¬≥‰Ó·‡ÊÂÌÓ ÔÎ‡Ì¯ÂÚË, ˇÍ≥ Ï‡˛Ú¸ ÒÚ≥ÎÛÒ.");
+		MessageBox::Show("–í—ñ–¥–æ–±—Ä–∞–∂–µ–Ω–æ –ø–ª–∞–Ω—à–µ—Ç–∏, —è–∫—ñ –º–∞—é—Ç—å —Å—Ç—ñ–ª—É—Å.");
 	}
 
-		   // --- ÀŒ√≤ ¿ ÕŒ”“¡” ≤¬ ---
+		   // --- –õ–û–ì–Ü–ö–ê –ù–û–£–¢–ë–£–ö–Ü–í ---
 	private: System::Void btnAddLaptop_Click(System::Object^ sender, System::EventArgs^ e) {
 		AddEditPackagingForm^ form = gcnew AddEditPackagingForm(nullptr);
 		if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
@@ -502,27 +502,27 @@ namespace CW {
 	}
 	private: System::Void btnFindWifi_Click(System::Object^ sender, System::EventArgs^ e) {
 		LoadDataGrid(wrapper->GetLaptopsWithWifi());
-		MessageBox::Show("¬≥‰Ó·‡ÊÂÌÓ ÌÓÛÚ·ÛÍË Á Ô≥‰ÚËÏÍÓ˛ Wi-Fi.");
+		MessageBox::Show("–í—ñ–¥–æ–±—Ä–∞–∂–µ–Ω–æ –Ω–æ—É—Ç–±—É–∫–∏ –∑ –ø—ñ–¥—Ç—Ä–∏–º–∫–æ—é Wi-Fi.");
 	}
 
-		   // --- ‘¿…À» ---
+		   // --- –§–ê–ô–õ–ò ---
 	private: System::Void btnSave_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
 			wrapper->SaveToFile(L"processes.txt");
-			MessageBox::Show("ƒ‡Ì≥ Á·ÂÂÊÂÌÓ Û processes.txt");
+			MessageBox::Show("–î–∞–Ω—ñ –∑–±–µ—Ä–µ–∂–µ–Ω–æ —É processes.txt");
 		}
-		catch (Exception^ ex) { MessageBox::Show("œÓÏËÎÍ‡: " + ex->Message); }
+		catch (Exception^ ex) { MessageBox::Show("–ü–æ–º–∏–ª–∫–∞: " + ex->Message); }
 	}
 	private: System::Void btnLoad_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
 			wrapper->LoadFromFile(L"processes.txt");
-			// ŒÌÓ‚Î˛∫ÏÓ ÔÓÚÓ˜ÌÂ ‚≥ÍÌÓ
+			// –û–Ω–æ–≤–ª—é—î–º–æ –ø–æ—Ç–æ—á–Ω–µ –≤—ñ–∫–Ω–æ
 			if (lblHeaderPhone->Visible) ShowPhoneView();
 			else if (lblHeaderTablet->Visible) ShowTabletView();
 			else ShowLaptopView();
-			MessageBox::Show("ƒ‡Ì≥ Á‡‚‡ÌÚ‡ÊÂÌÓ!");
+			MessageBox::Show("–î–∞–Ω—ñ –∑–∞–≤–∞–Ω—Ç–∞–∂–µ–Ω–æ!");
 		}
-		catch (Exception^ ex) { MessageBox::Show("œÓÏËÎÍ‡: " + ex->Message); }
+		catch (Exception^ ex) { MessageBox::Show("–ü–æ–º–∏–ª–∫–∞: " + ex->Message); }
 	}
 
 	};

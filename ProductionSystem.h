@@ -1,5 +1,5 @@
-#pragma once
-#include "Process.h" // Тут знаходяться наші класи Phone, Tablet, Laptop
+п»ї#pragma once
+#include "Process.h" // РўСѓС‚ Р·РЅР°С…РѕРґСЏС‚СЊСЃСЏ РЅР°С€С– РєР»Р°СЃРё Phone, Tablet, Laptop
 #include <vector>
 #include <string>
 
@@ -10,34 +10,34 @@ private:
     std::vector<Laptop> laptops;
 
 public:
-    // --- Додавання товарів ---
+    // --- Р”РѕРґР°РІР°РЅРЅСЏ С‚РѕРІР°СЂС–РІ ---
     void addPhone(const Phone& p);
     void addTablet(const Tablet& t);
     void addLaptop(const Laptop& l);
 
-    // --- Оновлення товарів (шукаємо за назвою/типом) ---
-    // Повертає true, якщо товар знайдено та оновлено
+    // --- РћРЅРѕРІР»РµРЅРЅСЏ С‚РѕРІР°СЂС–РІ (С€СѓРєР°С”РјРѕ Р·Р° РЅР°Р·РІРѕСЋ/С‚РёРїРѕРј) ---
+    // РџРѕРІРµСЂС‚Р°С” true, СЏРєС‰Рѕ С‚РѕРІР°СЂ Р·РЅР°Р№РґРµРЅРѕ С‚Р° РѕРЅРѕРІР»РµРЅРѕ
     bool updatePhone(const std::string& originalType, double price, double screenSize, const std::string& simType, const std::string& battery);
     bool updateTablet(const std::string& originalType, double price, const std::string& memory, const std::string& material, bool hasStylus);
     bool updateLaptop(const std::string& originalType, double price, const std::string& keyboard, const std::string& audio, const std::string& wireless);
 
-    // --- Гетери (відображення інформації про сутності) ---
+    // --- Р“РµС‚РµСЂРё (РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏ С–РЅС„РѕСЂРјР°С†С–С— РїСЂРѕ СЃСѓС‚РЅРѕСЃС‚С–) ---
     const std::vector<Phone>& getPhones() const { return phones; }
     const std::vector<Tablet>& getTablets() const { return tablets; }
     const std::vector<Laptop>& getLaptops() const { return laptops; }
 
-    // --- Спеціальні методи пошуку (відповідно до завдання) ---
+    // --- РЎРїРµС†С–Р°Р»СЊРЅС– РјРµС‚РѕРґРё РїРѕС€СѓРєСѓ (РІС–РґРїРѕРІС–РґРЅРѕ РґРѕ Р·Р°РІРґР°РЅРЅСЏ) ---
 
-    // Метод для перевірки наявності телефонів на одну SIM-карту
+    // РњРµС‚РѕРґ РґР»СЏ РїРµСЂРµРІС–СЂРєРё РЅР°СЏРІРЅРѕСЃС‚С– С‚РµР»РµС„РѕРЅС–РІ РЅР° РѕРґРЅСѓ SIM-РєР°СЂС‚Сѓ
     std::vector<Phone> findSingleSimPhones() const;
 
-    // Метод для перевірки наявності стілуса (пошук планшетів зі стілусом)
+    // РњРµС‚РѕРґ РґР»СЏ РїРµСЂРµРІС–СЂРєРё РЅР°СЏРІРЅРѕСЃС‚С– СЃС‚С–Р»СѓСЃР° (РїРѕС€СѓРє РїР»Р°РЅС€РµС‚С–РІ Р·С– СЃС‚С–Р»СѓСЃРѕРј)
     std::vector<Tablet> findTabletsWithStylus() const;
 
-    // Метод для перевірки можливості використання Wi-Fi (пошук ноутбуків з Wi-Fi)
+    // РњРµС‚РѕРґ РґР»СЏ РїРµСЂРµРІС–СЂРєРё РјРѕР¶Р»РёРІРѕСЃС‚С– РІРёРєРѕСЂРёСЃС‚Р°РЅРЅСЏ Wi-Fi (РїРѕС€СѓРє РЅРѕСѓС‚Р±СѓРєС–РІ Р· Wi-Fi)
     std::vector<Laptop> findLaptopsWithWifi() const;
 
-    // --- Файлові операції ---
+    // --- Р¤Р°Р№Р»РѕРІС– РѕРїРµСЂР°С†С–С— ---
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);
 };

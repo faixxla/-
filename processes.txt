@@ -1,6 +1,7 @@
 P;iPhone 13;iOS;Apple;28000;6.1;Nano-SIM;3240mAh
 P;Galaxy S21;Android;Samsung;22000;6.2;Dual SIM;4000mAh
 P;Nokia 3310;Symbian;Nokia;1500;2.4;One SIM;1200mAh
+P;авваів;авав;ваавав;12;12;ва;1212
 T;iPad Air;iPadOS;Apple;24000;64GB;Metal;1
 T;Galaxy Tab A7;Android;Samsung;7500;32GB;Plastic;0
 T;Lenovo Tab M10;Android;Lenovo;6000;32GB;Plastic;1

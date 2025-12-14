@@ -1,11 +1,12 @@
-#include "ProductionSystemWrapper.h"
+п»ї#include "ProductionSystemWrapper.h"
+#include "ProductionSystem.h"
 #include <msclr/marshal.h> 
 
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace msclr::interop;
 
-// --- Допоміжні методи конвертації рядків ---
+// --- Р”РѕРїРѕРјС–Р¶РЅС– РјРµС‚РѕРґРё РєРѕРЅРІРµСЂС‚Р°С†С–С— СЂСЏРґРєС–РІ ---
 String^ ProductionSystemWrapper::StringToCli(const std::string& s) {
     return gcnew String(s.c_str());
 }
@@ -14,7 +15,7 @@ std::string ProductionSystemWrapper::StringToCpp(String^ s) {
     return context.marshal_as<std::string>(s);
 }
 
-// --- Конструктор / Деструктор ---
+// --- РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ / Р”РµСЃС‚СЂСѓРєС‚РѕСЂ ---
 ProductionSystemWrapper::ProductionSystemWrapper()
 {
     systemPtr = new ProductionSystem();
@@ -33,7 +34,7 @@ ProductionSystemWrapper::!ProductionSystemWrapper()
     }
 }
 
-// --- Файли ---
+// --- Р¤Р°Р№Р»Рё ---
 void ProductionSystemWrapper::SaveToFile(String^ filename)
 {
     try {
@@ -54,7 +55,7 @@ void ProductionSystemWrapper::LoadFromFile(String^ filename)
     }
 }
 
-// --- Отримання списків (Get All) ---
+// --- РћС‚СЂРёРјР°РЅРЅСЏ СЃРїРёСЃРєС–РІ (Get All) ---
 
 List<PhoneData^>^ ProductionSystemWrapper::GetAllPhones()
 {
@@ -107,7 +108,7 @@ List<LaptopData^>^ ProductionSystemWrapper::GetAllLaptops()
     return list;
 }
 
-// --- Додавання (Add) ---
+// --- Р”РѕРґР°РІР°РЅРЅСЏ (Add) ---
 
 void ProductionSystemWrapper::AddPhone(PhoneData^ data)
 {
@@ -136,7 +137,7 @@ void ProductionSystemWrapper::AddLaptop(LaptopData^ data)
     systemPtr->addLaptop(l);
 }
 
-// --- Оновлення (Update) ---
+// --- РћРЅРѕРІР»РµРЅРЅСЏ (Update) ---
 
 bool ProductionSystemWrapper::UpdatePhone(String^ originalType, double price, double screen, String^ sim, String^ bat)
 {
@@ -153,12 +154,12 @@ bool ProductionSystemWrapper::UpdateLaptop(String^ originalType, double price, S
     return systemPtr->updateLaptop(StringToCpp(originalType), price, StringToCpp(keyb), StringToCpp(aud), StringToCpp(wire));
 }
 
-// --- Спеціальні запити (Specific Queries) ---
+// --- РЎРїРµС†С–Р°Р»СЊРЅС– Р·Р°РїРёС‚Рё (Specific Queries) ---
 
 List<PhoneData^>^ ProductionSystemWrapper::GetSingleSimPhones()
 {
     List<PhoneData^>^ list = gcnew List<PhoneData^>();
-    // Отримуємо вектор знайдених телефонів
+    // РћС‚СЂРёРјСѓС”РјРѕ РІРµРєС‚РѕСЂ Р·РЅР°Р№РґРµРЅРёС… С‚РµР»РµС„РѕРЅС–РІ
     std::vector<Phone> found = systemPtr->findSingleSimPhones();
 
     for (const auto& p : found) {

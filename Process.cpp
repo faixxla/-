@@ -1,4 +1,4 @@
-#include "Process.h" // Файл називається Process.h, хоча всередині класи Electronics
+п»ї#include "Process.h" // Р¤Р°Р№Р» РЅР°Р·РёРІР°С”С‚СЊСЃСЏ Process.h, С…РѕС‡Р° РІСЃРµСЂРµРґРёРЅС– РєР»Р°СЃРё Electronics
 #include <iostream>
 #include <algorithm>
 #include <cctype>
@@ -17,27 +17,27 @@ Electronics::Electronics(const std::string& type, const std::string& os, const s
     setPrice(price);
 }
 
-// Гетери
+// Р“РµС‚РµСЂРё
 std::string Electronics::getType() const { return type; }
 std::string Electronics::getOs() const { return os; }
 std::string Electronics::getBrand() const { return brand; }
 double Electronics::getPrice() const { return price; }
 
-// Сетери з перевірками
+// РЎРµС‚РµСЂРё Р· РїРµСЂРµРІС–СЂРєР°РјРё
 void Electronics::setType(const std::string& t) {
-    if (t.empty()) throw std::invalid_argument("Тип не може бути порожнім.");
+    if (t.empty()) throw std::invalid_argument("РўРёРї РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј.");
     type = t;
 }
 void Electronics::setOs(const std::string& o) {
-    if (o.empty()) throw std::invalid_argument("ОС не може бути порожньою.");
+    if (o.empty()) throw std::invalid_argument("РћРЎ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅСЊРѕСЋ.");
     os = o;
 }
 void Electronics::setBrand(const std::string& b) {
-    if (b.empty()) throw std::invalid_argument("Бренд не може бути порожнім.");
+    if (b.empty()) throw std::invalid_argument("Р‘СЂРµРЅРґ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј.");
     brand = b;
 }
 void Electronics::setPrice(double p) {
-    if (p < 0) throw std::invalid_argument("Ціна не може бути від'ємною.");
+    if (p < 0) throw std::invalid_argument("Р¦С–РЅР° РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РІС–Рґ'С”РјРЅРѕСЋ.");
     price = p;
 }
 
@@ -58,7 +58,7 @@ std::string Phone::getSimType() const { return simType; }
 std::string Phone::getBattery() const { return battery; }
 
 void Phone::setScreenSize(double s) {
-    if (s <= 0) throw std::invalid_argument("Діагональ має бути більше 0.");
+    if (s <= 0) throw std::invalid_argument("Р”С–Р°РіРѕРЅР°Р»СЊ РјР°С” Р±СѓС‚Рё Р±С–Р»СЊС€Рµ 0.");
     screenSize = s;
 }
 void Phone::setSimType(const std::string& s) { simType = s; }
@@ -69,11 +69,11 @@ void Phone::printInfo() const {
 }
 
 bool Phone::isSingleSim() const {
-    // Проста логіка: якщо в тексті є "one" або "одна" або "single"
+    // РџСЂРѕСЃС‚Р° Р»РѕРіС–РєР°: СЏРєС‰Рѕ РІ С‚РµРєСЃС‚С– С” "one" Р°Р±Рѕ "РѕРґРЅР°" Р°Р±Рѕ "single"
     std::string s = simType;
     std::transform(s.begin(), s.end(), s.begin(), ::tolower);
     if (s.find("one") != std::string::npos ||
-        s.find("одна") != std::string::npos ||
+        s.find("РѕРґРЅР°") != std::string::npos ||
         s.find("single") != std::string::npos) {
         return true;
     }
@@ -133,7 +133,7 @@ void Laptop::printInfo() const {
 }
 
 bool Laptop::hasWifiSupport() const {
-    // Шукаємо слово "wifi" або "wi-fi"
+    // РЁСѓРєР°С”РјРѕ СЃР»РѕРІРѕ "wifi" Р°Р±Рѕ "wi-fi"
     std::string w = wireless;
     std::transform(w.begin(), w.end(), w.begin(), ::tolower);
     return (w.find("fi") != std::string::npos);

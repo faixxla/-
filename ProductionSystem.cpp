@@ -1,11 +1,11 @@
-#include "ProductionSystem.h"
+п»ї#include "ProductionSystem.h"
 #include <iostream>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
 
-// --- Додавання ---
+// --- Р”РѕРґР°РІР°РЅРЅСЏ ---
 void ProductionSystem::addPhone(const Phone& p) {
     phones.push_back(p);
 }
@@ -18,7 +18,7 @@ void ProductionSystem::addLaptop(const Laptop& l) {
     laptops.push_back(l);
 }
 
-// --- Оновлення (шукаємо за полем Type, який виступає як назва моделі) ---
+// --- РћРЅРѕРІР»РµРЅРЅСЏ (С€СѓРєР°С”РјРѕ Р·Р° РїРѕР»РµРј Type, СЏРєРёР№ РІРёСЃС‚СѓРїР°С” СЏРє РЅР°Р·РІР° РјРѕРґРµР»С–) ---
 
 bool ProductionSystem::updatePhone(const std::string& originalType, double price, double screenSize, const std::string& simType, const std::string& battery) {
     for (auto& p : phones) {
@@ -59,7 +59,7 @@ bool ProductionSystem::updateLaptop(const std::string& originalType, double pric
     return false;
 }
 
-// --- Спеціальні методи пошуку ---
+// --- РЎРїРµС†С–Р°Р»СЊРЅС– РјРµС‚РѕРґРё РїРѕС€СѓРєСѓ ---
 
 std::vector<Phone> ProductionSystem::findSingleSimPhones() const {
     std::vector<Phone> result;
@@ -91,23 +91,23 @@ std::vector<Laptop> ProductionSystem::findLaptopsWithWifi() const {
     return result;
 }
 
-// --- Робота з файлами ---
+// --- Р РѕР±РѕС‚Р° Р· С„Р°Р№Р»Р°РјРё ---
 
 void ProductionSystem::saveToFile(const std::string& filename) const {
     std::ofstream out(filename);
-    if (!out) throw std::runtime_error("Не вдалося відкрити файл для запису.");
+    if (!out) throw std::runtime_error("РќРµ РІРґР°Р»РѕСЃСЏ РІС–РґРєСЂРёС‚Рё С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃСѓ.");
 
-    // Формат: P;Type;OS;Brand;Price;Screen;Sim;Battery
+    // Р¤РѕСЂРјР°С‚: P;Type;OS;Brand;Price;Screen;Sim;Battery
     for (const auto& p : phones) {
         out << "P;" << p.getType() << ";" << p.getOs() << ";" << p.getBrand() << ";"
             << p.getPrice() << ";" << p.getScreenSize() << ";" << p.getSimType() << ";" << p.getBattery() << "\n";
     }
-    // Формат: T;Type;OS;Brand;Price;Memory;Material;HasStylus(0/1)
+    // Р¤РѕСЂРјР°С‚: T;Type;OS;Brand;Price;Memory;Material;HasStylus(0/1)
     for (const auto& t : tablets) {
         out << "T;" << t.getType() << ";" << t.getOs() << ";" << t.getBrand() << ";"
             << t.getPrice() << ";" << t.getMemory() << ";" << t.getMaterial() << ";" << (t.getHasStylus() ? 1 : 0) << "\n";
     }
-    // Формат: L;Type;OS;Brand;Price;Keyboard;Audio;Wireless
+    // Р¤РѕСЂРјР°С‚: L;Type;OS;Brand;Price;Keyboard;Audio;Wireless
     for (const auto& l : laptops) {
         out << "L;" << l.getType() << ";" << l.getOs() << ";" << l.getBrand() << ";"
             << l.getPrice() << ";" << l.getKeyboardType() << ";" << l.getAudioInfo() << ";" << l.getWireless() << "\n";
@@ -117,7 +117,7 @@ void ProductionSystem::saveToFile(const std::string& filename) const {
 void ProductionSystem::loadFromFile(const std::string& filename) {
     std::ifstream in(filename);
     if (!in) {
-        // Якщо файлу немає, просто очищуємо списки, це не критична помилка для першого запуску
+        // РЇРєС‰Рѕ С„Р°Р№Р»Сѓ РЅРµРјР°С”, РїСЂРѕСЃС‚Рѕ РѕС‡РёС‰СѓС”РјРѕ СЃРїРёСЃРєРё, С†Рµ РЅРµ РєСЂРёС‚РёС‡РЅР° РїРѕРјРёР»РєР° РґР»СЏ РїРµСЂС€РѕРіРѕ Р·Р°РїСѓСЃРєСѓ
         phones.clear(); tablets.clear(); laptops.clear();
         return;
     }
@@ -137,7 +137,7 @@ void ProductionSystem::loadFromFile(const std::string& filename) {
             std::string type, os, brand, tmp;
             double price;
 
-            // Спільні поля
+            // РЎРїС–Р»СЊРЅС– РїРѕР»СЏ
             std::getline(ss, type, ';');
             std::getline(ss, os, ';');
             std::getline(ss, brand, ';');
@@ -168,7 +168,7 @@ void ProductionSystem::loadFromFile(const std::string& filename) {
             }
         }
         catch (...) {
-            // Ігноруємо пошкоджені рядки
+            // Р†РіРЅРѕСЂСѓС”РјРѕ РїРѕС€РєРѕРґР¶РµРЅС– СЂСЏРґРєРё
         }
     }
 }

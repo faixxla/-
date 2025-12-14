@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "ProductionSystemWrapper.h"
 
 namespace CW {
@@ -13,7 +13,7 @@ namespace CW {
     public ref class AddEditTestingForm : public System::Windows::Forms::Form
     {
     public:
-        property TabletData^ ResultData; // Çì³íèëè íà TabletData
+        property TabletData^ ResultData; // Ð—Ð¼Ñ–Ð½Ð¸Ð»Ð¸ Ð½Ð° TabletData
 
         AddEditTestingForm(TabletData^ inputData)
         {
@@ -21,7 +21,7 @@ namespace CW {
             ResultData = inputData;
 
             if (inputData != nullptr) {
-                this->Text = "Ðåäàãóâàòè Ïëàíøåò";
+                this->Text = "Ð ÐµÐ´Ð°Ð³ÑƒÐ²Ð°Ñ‚Ð¸ ÐŸÐ»Ð°Ð½ÑˆÐµÑ‚";
                 txtType->Text = inputData->Type; txtType->ReadOnly = true;
                 txtOS->Text = inputData->OS;
                 txtBrand->Text = inputData->Brand;
@@ -31,7 +31,7 @@ namespace CW {
                 chkStylus->Checked = inputData->HasStylus;
             }
             else {
-                this->Text = "Äîäàòè Ïëàíøåò";
+                this->Text = "Ð”Ð¾Ð´Ð°Ñ‚Ð¸ ÐŸÐ»Ð°Ð½ÑˆÐµÑ‚";
             }
         }
 
@@ -43,7 +43,7 @@ namespace CW {
     private: System::Windows::Forms::TextBox^ txtBrand;
     private: System::Windows::Forms::TextBox^ txtPrice;
 
-           // Ñïåöèô³÷í³
+           // Ð¡Ð¿ÐµÑ†Ð¸Ñ„Ñ–Ñ‡Ð½Ñ–
     private: System::Windows::Forms::TextBox^ txtMemory;
     private: System::Windows::Forms::TextBox^ txtMaterial;
     private: System::Windows::Forms::CheckBox^ chkStylus;
@@ -60,22 +60,22 @@ namespace CW {
                int y = 20; int lblW = 120; int txtW = 200; int gap = 35;
 
                // Helper function as a private method instead of a lambda
-               AddField("Ìîäåëü (Type):", txtType, y, lblW, txtW, gap);
+               AddField("ÐœÐ¾Ð´ÐµÐ»ÑŒ (Type):", txtType, y, lblW, txtW, gap);
                y += gap;
-               AddField("ÎÑ:", txtOS, y, lblW, txtW, gap);
+               AddField("ÐžÐ¡:", txtOS, y, lblW, txtW, gap);
                y += gap;
-               AddField("Áðåíä:", txtBrand, y, lblW, txtW, gap);
+               AddField("Ð‘Ñ€ÐµÐ½Ð´:", txtBrand, y, lblW, txtW, gap);
                y += gap;
-               AddField("Ö³íà:", txtPrice, y, lblW, txtW, gap);
+               AddField("Ð¦Ñ–Ð½Ð°:", txtPrice, y, lblW, txtW, gap);
                y += gap;
-               AddField("Ïàì'ÿòü:", txtMemory, y, lblW, txtW, gap);
+               AddField("ÐŸÐ°Ð¼'ÑÑ‚ÑŒ:", txtMemory, y, lblW, txtW, gap);
                y += gap;
-               AddField("Ìàòåð³àë:", txtMaterial, y, lblW, txtW, gap);
+               AddField("ÐœÐ°Ñ‚ÐµÑ€Ñ–Ð°Ð»:", txtMaterial, y, lblW, txtW, gap);
                y += gap;
 
                // Checkbox Stylus
-               Label^ lblS = gcnew Label(); lblS->Text = "Ñò³ëóñ?"; lblS->Location = Point(10, y);
-               chkStylus = gcnew CheckBox(); chkStylus->Location = Point(140, y); chkStylus->Text = "Òàê, º ï³äòðèìêà"; chkStylus->AutoSize = true;
+               Label^ lblS = gcnew Label(); lblS->Text = "Ð¡Ñ‚Ñ–Ð»ÑƒÑ?"; lblS->Location = Point(10, y);
+               chkStylus = gcnew CheckBox(); chkStylus->Location = Point(140, y); chkStylus->Text = "Ð¢Ð°Ðº, Ñ” Ð¿Ñ–Ð´Ñ‚Ñ€Ð¸Ð¼ÐºÐ°"; chkStylus->AutoSize = true;
                this->Controls->Add(lblS); this->Controls->Add(chkStylus); y += gap + 10;
 
                btnOK = gcnew Button(); btnOK->Text = "OK"; btnOK->Location = Point(180, y); btnOK->DialogResult = System::Windows::Forms::DialogResult::OK;
@@ -103,7 +103,7 @@ namespace CW {
 
     private: System::Void btnOK_Click(System::Object^ sender, System::EventArgs^ e) {
         try {
-            if (String::IsNullOrWhiteSpace(txtType->Text)) throw gcnew Exception("Ââåä³òü ìîäåëü!");
+            if (String::IsNullOrWhiteSpace(txtType->Text)) throw gcnew Exception("Ð’Ð²ÐµÐ´Ñ–Ñ‚ÑŒ Ð¼Ð¾Ð´ÐµÐ»ÑŒ!");
             double price = Double::Parse(txtPrice->Text);
 
             if (ResultData == nullptr) ResultData = gcnew TabletData();
@@ -119,7 +119,7 @@ namespace CW {
             this->Close();
         }
         catch (Exception^ ex) {
-            MessageBox::Show("Ïîìèëêà: " + ex->Message);
+            MessageBox::Show("ÐŸÐ¾Ð¼Ð¸Ð»ÐºÐ°: " + ex->Message);
             this->DialogResult = System::Windows::Forms::DialogResult::None;
         }
     }

@@ -1,42 +1,42 @@
-#pragma once
+п»ї#pragma once
 #include <string>
 #include <iostream>
 #include <stdexcept>
 
-// Базовий клас: Електроніка
+// Р‘Р°Р·РѕРІРёР№ РєР»Р°СЃ: Р•Р»РµРєС‚СЂРѕРЅС–РєР°
 class Electronics {
 protected:
-    std::string type;   // Тип пристрою
-    std::string os;     // Операційна система
-    std::string brand;  // Бренд
-    double price;       // Ціна
+    std::string type;   // РўРёРї РїСЂРёСЃС‚СЂРѕСЋ
+    std::string os;     // РћРїРµСЂР°С†С–Р№РЅР° СЃРёСЃС‚РµРјР°
+    std::string brand;  // Р‘СЂРµРЅРґ
+    double price;       // Р¦С–РЅР°
 
 public:
     Electronics();
     Electronics(const std::string& type, const std::string& os, const std::string& brand, double price);
 
     virtual ~Electronics() = default;
-    virtual void printInfo() const = 0; // Метод відображення інформації
+    virtual void printInfo() const = 0; // РњРµС‚РѕРґ РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏ С–РЅС„РѕСЂРјР°С†С–С—
 
-    // Гетери
+    // Р“РµС‚РµСЂРё
     std::string getType() const;
     std::string getOs() const;
     std::string getBrand() const;
     double getPrice() const;
 
-    // Сетери
+    // РЎРµС‚РµСЂРё
     void setType(const std::string& t);
     void setOs(const std::string& o);
     void setBrand(const std::string& b);
     void setPrice(double p);
 };
 
-// Клас: Телефон
+// РљР»Р°СЃ: РўРµР»РµС„РѕРЅ
 class Phone : public Electronics {
 private:
-    double screenSize;      // Діагональ
-    std::string simType;    // Тип SIM (одна SIM, дві SIM, nano...)
-    std::string battery;    // Інформація про батарею
+    double screenSize;      // Р”С–Р°РіРѕРЅР°Р»СЊ
+    std::string simType;    // РўРёРї SIM (РѕРґРЅР° SIM, РґРІС– SIM, nano...)
+    std::string battery;    // Р†РЅС„РѕСЂРјР°С†С–СЏ РїСЂРѕ Р±Р°С‚Р°СЂРµСЋ
 
 public:
     Phone();
@@ -53,16 +53,16 @@ public:
 
     void printInfo() const override;
 
-    // Спеціальний метод: перевірка на одну SIM-карту
+    // РЎРїРµС†С–Р°Р»СЊРЅРёР№ РјРµС‚РѕРґ: РїРµСЂРµРІС–СЂРєР° РЅР° РѕРґРЅСѓ SIM-РєР°СЂС‚Сѓ
     bool isSingleSim() const;
 };
 
-// Клас: Планшет
+// РљР»Р°СЃ: РџР»Р°РЅС€РµС‚
 class Tablet : public Electronics {
 private:
-    std::string memory;     // Пам'ять
-    std::string material;   // Матеріали корпусу
-    bool hasStylus;         // Підтримка стілусу
+    std::string memory;     // РџР°Рј'СЏС‚СЊ
+    std::string material;   // РњР°С‚РµСЂС–Р°Р»Рё РєРѕСЂРїСѓСЃСѓ
+    bool hasStylus;         // РџС–РґС‚СЂРёРјРєР° СЃС‚С–Р»СѓСЃСѓ
 
 public:
     Tablet();
@@ -79,16 +79,16 @@ public:
 
     void printInfo() const override;
 
-    // Спеціальний метод: перевірка наявності стілуса
+    // РЎРїРµС†С–Р°Р»СЊРЅРёР№ РјРµС‚РѕРґ: РїРµСЂРµРІС–СЂРєР° РЅР°СЏРІРЅРѕСЃС‚С– СЃС‚С–Р»СѓСЃР°
     bool checkStylusSupport() const;
 };
 
-// Клас: Ноутбук
+// РљР»Р°СЃ: РќРѕСѓС‚Р±СѓРє
 class Laptop : public Electronics {
 private:
-    std::string keyboardType; // Тип клавіатури
-    std::string audioInfo;    // Аудіо
-    std::string wireless;     // Бездротові засоби (Wi-Fi, Bluetooth...)
+    std::string keyboardType; // РўРёРї РєР»Р°РІС–Р°С‚СѓСЂРё
+    std::string audioInfo;    // РђСѓРґС–Рѕ
+    std::string wireless;     // Р‘РµР·РґСЂРѕС‚РѕРІС– Р·Р°СЃРѕР±Рё (Wi-Fi, Bluetooth...)
 
 public:
     Laptop();
@@ -105,11 +105,11 @@ public:
 
     void printInfo() const override;
 
-    // Спеціальний метод: перевірка наявності Wi-Fi
+    // РЎРїРµС†С–Р°Р»СЊРЅРёР№ РјРµС‚РѕРґ: РїРµСЂРµРІС–СЂРєР° РЅР°СЏРІРЅРѕСЃС‚С– Wi-Fi
     bool hasWifiSupport() const;
 };
 
-// Допоміжна структура для сортування (наприклад, за ціною)
+// Р”РѕРїРѕРјС–Р¶РЅР° СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ СЃРѕСЂС‚СѓРІР°РЅРЅСЏ (РЅР°РїСЂРёРєР»Р°Рґ, Р·Р° С†С–РЅРѕСЋ)
 struct CompareByPrice {
     template<typename T>
     bool operator()(const T& a, const T& b) const {

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "ProductionSystemWrapper.h"
 
 namespace CW {
@@ -13,7 +13,7 @@ namespace CW {
     public ref class AddEditPackagingForm : public System::Windows::Forms::Form
     {
     public:
-        property LaptopData^ ResultData; // Çì³íèëè íà LaptopData
+        property LaptopData^ ResultData; // Ð—Ð¼Ñ–Ð½Ð¸Ð»Ð¸ Ð½Ð° LaptopData
 
         AddEditPackagingForm(LaptopData^ inputData)
         {
@@ -21,7 +21,7 @@ namespace CW {
             ResultData = inputData;
 
             if (inputData != nullptr) {
-                this->Text = "Ðåäàãóâàòè Íîóòáóê";
+                this->Text = "Ð ÐµÐ´Ð°Ð³ÑƒÐ²Ð°Ñ‚Ð¸ ÐÐ¾ÑƒÑ‚Ð±ÑƒÐº";
                 txtType->Text = inputData->Type; txtType->ReadOnly = true;
                 txtOS->Text = inputData->OS;
                 txtBrand->Text = inputData->Brand;
@@ -31,7 +31,7 @@ namespace CW {
                 txtWire->Text = inputData->Wireless;
             }
             else {
-                this->Text = "Äîäàòè Íîóòáóê";
+                this->Text = "Ð”Ð¾Ð´Ð°Ñ‚Ð¸ ÐÐ¾ÑƒÑ‚Ð±ÑƒÐº";
             }
         }
 
@@ -43,7 +43,7 @@ namespace CW {
     private: System::Windows::Forms::TextBox^ txtBrand;
     private: System::Windows::Forms::TextBox^ txtPrice;
 
-           // Ñïåöèô³÷í³
+           // Ð¡Ð¿ÐµÑ†Ð¸Ñ„Ñ–Ñ‡Ð½Ñ–
     private: System::Windows::Forms::TextBox^ txtKeyb;
     private: System::Windows::Forms::TextBox^ txtAudio;
     private: System::Windows::Forms::TextBox^ txtWire;
@@ -59,13 +59,13 @@ namespace CW {
                this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
                int y = 20; int lblW = 120; int txtW = 200; int gap = 35;
 
-               AddField("Ìîäåëü (Type):", txtType, y, lblW, txtW, gap);
-               AddField("ÎÑ:", txtOS, y, lblW, txtW, gap);
-               AddField("Áðåíä:", txtBrand, y, lblW, txtW, gap);
-               AddField("Ö³íà:", txtPrice, y, lblW, txtW, gap);
-               AddField("Êëàâ³àòóðà:", txtKeyb, y, lblW, txtW, gap);
-               AddField("Àóä³î:", txtAudio, y, lblW, txtW, gap);
-               AddField("Áåçäðîò. çâ'ÿçîê:", txtWire, y, lblW, txtW, gap);
+               AddField("ÐœÐ¾Ð´ÐµÐ»ÑŒ (Type):", txtType, y, lblW, txtW, gap);
+               AddField("ÐžÐ¡:", txtOS, y, lblW, txtW, gap);
+               AddField("Ð‘Ñ€ÐµÐ½Ð´:", txtBrand, y, lblW, txtW, gap);
+               AddField("Ð¦Ñ–Ð½Ð°:", txtPrice, y, lblW, txtW, gap);
+               AddField("ÐšÐ»Ð°Ð²Ñ–Ð°Ñ‚ÑƒÑ€Ð°:", txtKeyb, y, lblW, txtW, gap);
+               AddField("ÐÑƒÐ´Ñ–Ð¾:", txtAudio, y, lblW, txtW, gap);
+               AddField("Ð‘ÐµÐ·Ð´Ñ€Ð¾Ñ‚. Ð·Ð²'ÑÐ·Ð¾Ðº:", txtWire, y, lblW, txtW, gap);
 
                btnOK = gcnew Button(); btnOK->Text = "OK"; btnOK->Location = Point(180, y); btnOK->DialogResult = System::Windows::Forms::DialogResult::OK;
                btnOK->Click += gcnew EventHandler(this, &AddEditPackagingForm::btnOK_Click);
@@ -77,7 +77,7 @@ namespace CW {
 
     private: System::Void btnOK_Click(System::Object^ sender, System::EventArgs^ e) {
         try {
-            if (String::IsNullOrWhiteSpace(txtType->Text)) throw gcnew Exception("Ââåä³òü ìîäåëü!");
+            if (String::IsNullOrWhiteSpace(txtType->Text)) throw gcnew Exception("Ð’Ð²ÐµÐ´Ñ–Ñ‚ÑŒ Ð¼Ð¾Ð´ÐµÐ»ÑŒ!");
             double price = Double::Parse(txtPrice->Text);
 
             if (ResultData == nullptr) ResultData = gcnew LaptopData();
@@ -93,7 +93,7 @@ namespace CW {
             this->Close();
         }
         catch (Exception^ ex) {
-            MessageBox::Show("Ïîìèëêà: " + ex->Message);
+            MessageBox::Show("ÐŸÐ¾Ð¼Ð¸Ð»ÐºÐ°: " + ex->Message);
             this->DialogResult = System::Windows::Forms::DialogResult::None;
         }
     }
