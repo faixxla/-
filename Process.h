@@ -3,160 +3,116 @@
 #include <iostream>
 #include <stdexcept>
 
-class ProductionProcess {
+// Базовий клас: Електроніка
+class Electronics {
 protected:
-    std::string processId;
-    double duration;
-    int workers;
-    std::string location;
+    std::string type;   // Тип пристрою
+    std::string os;     // Операційна система
+    std::string brand;  // Бренд
+    double price;       // Ціна
 
 public:
-    ProductionProcess();
-    ProductionProcess(const std::string& id,
-        double duration,
-        int workers,
-        const std::string& location);
+    Electronics();
+    Electronics(const std::string& type, const std::string& os, const std::string& brand, double price);
 
-    virtual ~ProductionProcess() = default;
-    virtual void printInfo() const = 0;
+    virtual ~Electronics() = default;
+    virtual void printInfo() const = 0; // Метод відображення інформації
 
-    std::string getId() const;
-    double getDuration() const;
-    int getWorkers() const;
-    std::string getLocation() const;
+    // Гетери
+    std::string getType() const;
+    std::string getOs() const;
+    std::string getBrand() const;
+    double getPrice() const;
 
-    void setId(const std::string& id);
-    void setDuration(double d);
-    void setWorkers(int w);
-    void setLocation(const std::string& loc);
+    // Сетери
+    void setType(const std::string& t);
+    void setOs(const std::string& o);
+    void setBrand(const std::string& b);
+    void setPrice(double p);
 };
 
-
-class AssemblyProcess : public ProductionProcess {
+// Клас: Телефон
+class Phone : public Electronics {
 private:
-    int partsCount;
-    double assemblyTime;
-    std::string tool;
+    double screenSize;      // Діагональ
+    std::string simType;    // Тип SIM (одна SIM, дві SIM, nano...)
+    std::string battery;    // Інформація про батарею
 
 public:
-    AssemblyProcess();
-    AssemblyProcess(const std::string& id,
-        double duration,
-        int workers,
-        const std::string& location,
-        int partsCount,
-        double assemblyTime,
-        const std::string& tool);
+    Phone();
+    Phone(const std::string& type, const std::string& os, const std::string& brand, double price,
+        double screenSize, const std::string& simType, const std::string& battery);
 
-    int getPartsCount() const;
-    double getAssemblyTime() const;
-    std::string getTool() const;
+    double getScreenSize() const;
+    std::string getSimType() const;
+    std::string getBattery() const;
 
-    void setPartsCount(int count);
-    void setAssemblyTime(double time);
-    void setTool(const std::string& tool);
-
-    void printInfo() const override;
-};
-
-
-class TestingProcess : public ProductionProcess {
-private:
-    std::string testType;
-    std::string parameters;
-    std::string status;
-    double maxLoad;
-    double measuredTolerance;
-    double targetTolerance;
-    bool hasPassedSafety;
-public:
-    TestingProcess();
-    TestingProcess(const std::string& id,
-        double duration,
-        int workers,
-        const std::string& location,
-        const std::string& testType,
-        const std::string& parameters,
-        const std::string& status,
-        double maxLoad, double measuredTolerance, double targetTolerance,
-        bool hasPassedSafety);
-
-    std::string getTestType() const;
-    std::string getParameters() const;
-    std::string getStatus() const;
-    double getMaxLoad() const;
-    double getMeasuredTolerance() const;
-    double getTargetTolerance() const;
-    bool getHasPassedSafety() const;
-
-    void setTestType(const std::string& t);
-    void setParameters(const std::string& p);
-    void setStatus(const std::string& s);
-
+    void setScreenSize(double s);
+    void setSimType(const std::string& s);
+    void setBattery(const std::string& b);
 
     void printInfo() const override;
 
-    std::string analyzeResults() const;
+    // Спеціальний метод: перевірка на одну SIM-карту
+    bool isSingleSim() const;
 };
 
-
-class PackagingProcess : public ProductionProcess {
+// Клас: Планшет
+class Tablet : public Electronics {
 private:
-    std::string packageType;
-    std::string materials;
-    std::string design;
+    std::string memory;     // Пам'ять
+    std::string material;   // Матеріали корпусу
+    bool hasStylus;         // Підтримка стілусу
 
 public:
-    PackagingProcess();
-    PackagingProcess(const std::string& id,
-        double duration,
-        int workers,
-        const std::string& location,
-        const std::string& packageType,
-        const std::string& materials,
-        const std::string& design);
+    Tablet();
+    Tablet(const std::string& type, const std::string& os, const std::string& brand, double price,
+        const std::string& memory, const std::string& material, bool hasStylus);
 
-    std::string getPackageType() const;
-    std::string getMaterials() const;
-    std::string getDesign() const;
+    std::string getMemory() const;
+    std::string getMaterial() const;
+    bool getHasStylus() const;
 
-    void setPackageType(const std::string& t);
-    void setMaterials(const std::string& m);
-    void setDesign(const std::string& d);
+    void setMemory(const std::string& m);
+    void setMaterial(const std::string& m);
+    void setHasStylus(bool s);
 
     void printInfo() const override;
 
-    bool matchesCriteria(const std::string& type,
-        const std::string& materialSubstring) const;
+    // Спеціальний метод: перевірка наявності стілуса
+    bool checkStylusSupport() const;
 };
 
-#include <vector>
+// Клас: Ноутбук
+class Laptop : public Electronics {
+private:
+    std::string keyboardType; // Тип клавіатури
+    std::string audioInfo;    // Аудіо
+    std::string wireless;     // Бездротові засоби (Wi-Fi, Bluetooth...)
 
-template<typename T>
-void printVector(const std::vector<T>& vec) {
-    if (vec.empty()) {
-        std::cout << "Список порожній.\n";
-        return;
-    }
-    for (const auto& item : vec) {
-        item.printInfo();
-    }
-}
+public:
+    Laptop();
+    Laptop(const std::string& type, const std::string& os, const std::string& brand, double price,
+        const std::string& keyboardType, const std::string& audioInfo, const std::string& wireless);
 
-template<typename T>
-T* findById(std::vector<T>& vec, const std::string& id) {
-    for (auto& item : vec) {
-        if (item.getId() == id) {
-            return &item;
-        }
-    }
-    return nullptr;
-}
+    std::string getKeyboardType() const;
+    std::string getAudioInfo() const;
+    std::string getWireless() const;
 
+    void setKeyboardType(const std::string& k);
+    void setAudioInfo(const std::string& a);
+    void setWireless(const std::string& w);
 
-struct CompareByDuration {
+    void printInfo() const override;
+
+    // Спеціальний метод: перевірка наявності Wi-Fi
+    bool hasWifiSupport() const;
+};
+
+// Допоміжна структура для сортування (наприклад, за ціною)
+struct CompareByPrice {
     template<typename T>
     bool operator()(const T& a, const T& b) const {
-        return a.getDuration() < b.getDuration();
+        return a.getPrice() < b.getPrice();
     }
 };

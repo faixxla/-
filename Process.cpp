@@ -1,242 +1,140 @@
-#include "Process.h"
+#include "Process.h" // Файл називається Process.h, хоча всередині класи Electronics
 #include <iostream>
 #include <algorithm>
 #include <cctype>
 #include <string>
-#include <locale>
 
-static inline std::string trim(const std::string& s) {
-    size_t start = 0;
-    while (start < s.size() && std::isspace(static_cast<unsigned char>(s[start]))) ++start;
-    size_t end = s.size();
-    while (end > start && std::isspace(static_cast<unsigned char>(s[end - 1]))) --end;
-    return s.substr(start, end - start);
+// --- ELECTRONICS (BASE) ---
+
+Electronics::Electronics()
+    : type("Unknown"), os("None"), brand("Unknown"), price(0.0) {
 }
 
-static inline std::string toLowerStr(const std::string& s) {
-    std::string r = s;
-    std::transform(r.begin(), r.end(), r.begin(),
-        [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
-    return r;
+Electronics::Electronics(const std::string& type, const std::string& os, const std::string& brand, double price) {
+    setType(type);
+    setOs(os);
+    setBrand(brand);
+    setPrice(price);
 }
 
+// Гетери
+std::string Electronics::getType() const { return type; }
+std::string Electronics::getOs() const { return os; }
+std::string Electronics::getBrand() const { return brand; }
+double Electronics::getPrice() const { return price; }
 
-ProductionProcess::ProductionProcess()
-    : processId("unknown"), duration(0.0), workers(0), location("unknown") {
+// Сетери з перевірками
+void Electronics::setType(const std::string& t) {
+    if (t.empty()) throw std::invalid_argument("Тип не може бути порожнім.");
+    type = t;
+}
+void Electronics::setOs(const std::string& o) {
+    if (o.empty()) throw std::invalid_argument("ОС не може бути порожньою.");
+    os = o;
+}
+void Electronics::setBrand(const std::string& b) {
+    if (b.empty()) throw std::invalid_argument("Бренд не може бути порожнім.");
+    brand = b;
+}
+void Electronics::setPrice(double p) {
+    if (p < 0) throw std::invalid_argument("Ціна не може бути від'ємною.");
+    price = p;
 }
 
-ProductionProcess::ProductionProcess(const std::string& id,
-    double duration,
-    int workers,
-    const std::string& location)
-{
-    setId(id);
-    setDuration(duration);
-    setWorkers(workers);
-    setLocation(location);
+// --- PHONE ---
+
+Phone::Phone() : Electronics(), screenSize(0.0), simType("Unknown"), battery("Unknown") {}
+
+Phone::Phone(const std::string& type, const std::string& os, const std::string& brand, double price,
+    double screenSize, const std::string& simType, const std::string& battery)
+    : Electronics(type, os, brand, price) {
+    setScreenSize(screenSize);
+    setSimType(simType);
+    setBattery(battery);
 }
 
-std::string ProductionProcess::getId() const { return processId; }
-double ProductionProcess::getDuration() const { return duration; }
-int ProductionProcess::getWorkers() const { return workers; }
-std::string ProductionProcess::getLocation() const { return location; }
+double Phone::getScreenSize() const { return screenSize; }
+std::string Phone::getSimType() const { return simType; }
+std::string Phone::getBattery() const { return battery; }
 
-void ProductionProcess::setId(const std::string& id) {
-    if (id.empty())
-        throw std::invalid_argument("Ідентифікатор процесу не може бути порожнім.");
-    processId = id;
+void Phone::setScreenSize(double s) {
+    if (s <= 0) throw std::invalid_argument("Діагональ має бути більше 0.");
+    screenSize = s;
+}
+void Phone::setSimType(const std::string& s) { simType = s; }
+void Phone::setBattery(const std::string& b) { battery = b; }
+
+void Phone::printInfo() const {
+    std::cout << "Phone: " << brand << " " << type << ", Price: " << price << "\n";
 }
 
-void ProductionProcess::setDuration(double d) {
-    if (d <= 0)
-        throw std::invalid_argument("Тривалість повинна бути більшою за 0.");
-    duration = d;
-}
-
-void ProductionProcess::setWorkers(int w) {
-    if (w <= 0)
-        throw std::invalid_argument("Кількість працівників повинна бути більшою за 0.");
-    workers = w;
-}
-
-void ProductionProcess::setLocation(const std::string& loc) {
-    if (loc.empty())
-        throw std::invalid_argument("Місцезнаходження не може бути порожнім.");
-    location = loc;
-}
-
-
-AssemblyProcess::AssemblyProcess()
-    : ProductionProcess(), partsCount(0), assemblyTime(0.0), tool("unknown") {
-}
-
-AssemblyProcess::AssemblyProcess(const std::string& id,
-    double duration,
-    int workers,
-    const std::string& location,
-    int partsCount,
-    double assemblyTime,
-    const std::string& tool)
-    : ProductionProcess(id, duration, workers, location)
-{
-    setPartsCount(partsCount);
-    setAssemblyTime(assemblyTime);
-    setTool(tool);
-}
-
-int AssemblyProcess::getPartsCount() const { return partsCount; }
-double AssemblyProcess::getAssemblyTime() const { return assemblyTime; }
-std::string AssemblyProcess::getTool() const { return tool; }
-
-void AssemblyProcess::setPartsCount(int count) {
-    if (count <= 0)
-        throw std::invalid_argument("Кількість деталей повинна бути більшою за 0.");
-    partsCount = count;
-}
-
-void AssemblyProcess::setAssemblyTime(double time) {
-    if (time <= 0)
-        throw std::invalid_argument("Час збирання повинен бути більшим за 0.");
-    assemblyTime = time;
-}
-
-void AssemblyProcess::setTool(const std::string& t) {
-    if (t.empty())
-        throw std::invalid_argument("Інструмент не може бути порожнім.");
-    tool = t;
-}
-
-void AssemblyProcess::printInfo() const {
-}
-
-
-TestingProcess::TestingProcess()
-    : ProductionProcess(), testType("unknown"), parameters("none"), status("pending"), maxLoad(0.0), measuredTolerance(0.0), targetTolerance(0.0), hasPassedSafety(false) {
-}
-
-TestingProcess::TestingProcess(const std::string& id,
-    double duration,
-    int workers,
-    const std::string& location,
-    const std::string& testType,
-    const std::string& parameters,
-    const std::string& status,
-    double maxLoad,
-    double measuredTolerance,
-    double targetTolerance,
-    bool hasPassedSafety)
-    : ProductionProcess(id, duration, workers, location),
-    maxLoad(maxLoad),
-    measuredTolerance(measuredTolerance),
-    targetTolerance(targetTolerance),
-    hasPassedSafety(hasPassedSafety)
-{
-    setTestType(testType);
-    setParameters(parameters);
-    setStatus(status);
-
-}
-
-std::string TestingProcess::getTestType() const { return testType; }
-std::string TestingProcess::getParameters() const { return parameters; }
-std::string TestingProcess::getStatus() const { return status; }
-double TestingProcess::getMaxLoad() const { return maxLoad; }
-double TestingProcess::getMeasuredTolerance() const { return measuredTolerance; }
-double TestingProcess::getTargetTolerance() const { return targetTolerance; }
-bool TestingProcess::getHasPassedSafety() const { return hasPassedSafety; }
-
-void TestingProcess::setTestType(const std::string& t) {
-    if (t.empty())
-        throw std::invalid_argument("Тип випробування не може бути порожнім.");
-    testType = t;
-}
-
-void TestingProcess::setParameters(const std::string& p) {
-    if (p.empty())
-        throw std::invalid_argument("Параметри тестування не можуть бути порожніми.");
-    parameters = p;
-}
-
-void TestingProcess::setStatus(const std::string& s) {
-    if (s.empty())
-        throw std::invalid_argument("Статус не може бути порожнім.");
-    status = s;
-}
-
-void TestingProcess::printInfo() const {
-}
-
-std::string TestingProcess::analyzeResults() const {
-    if (status != "completed") {
-        return "Результати не можуть бути проаналізовані: випробування ще не закінчено.";
+bool Phone::isSingleSim() const {
+    // Проста логіка: якщо в тексті є "one" або "одна" або "single"
+    std::string s = simType;
+    std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+    if (s.find("one") != std::string::npos ||
+        s.find("одна") != std::string::npos ||
+        s.find("single") != std::string::npos) {
+        return true;
     }
-
-    if (!hasPassedSafety) {
-        return "АНАЛІЗ: НЕ ПРОЙДЕНО. Провал критичного тесту на безпеку.";
-    }
-
-    if (measuredTolerance <= targetTolerance) {
-        return "АНАЛІЗ: ПРОЙДЕНО УСПІШНО. Точність (" + std::to_string(measuredTolerance) + ") в межах норми (" + std::to_string(targetTolerance) + ").";
-    } else {
-        return "АНАЛІЗ: НЕ ПРОЙДЕНО. Похибка перевищує допустиму норму!";
-    }
+    return false;
 }
 
+// --- TABLET ---
 
-PackagingProcess::PackagingProcess()
-    : ProductionProcess(), packageType("unknown"), materials("none"), design("none") {
+Tablet::Tablet() : Electronics(), memory("Unknown"), material("Plastic"), hasStylus(false) {}
+
+Tablet::Tablet(const std::string& type, const std::string& os, const std::string& brand, double price,
+    const std::string& memory, const std::string& material, bool hasStylus)
+    : Electronics(type, os, brand, price) {
+    setMemory(memory);
+    setMaterial(material);
+    setHasStylus(hasStylus);
 }
 
-PackagingProcess::PackagingProcess(const std::string& id,
-    double duration,
-    int workers,
-    const std::string& location,
-    const std::string& packageType,
-    const std::string& materials,
-    const std::string& design)
-    : ProductionProcess(id, duration, workers, location)
-{
-    setPackageType(packageType);
-    setMaterials(materials);
-    setDesign(design);
+std::string Tablet::getMemory() const { return memory; }
+std::string Tablet::getMaterial() const { return material; }
+bool Tablet::getHasStylus() const { return hasStylus; }
+
+void Tablet::setMemory(const std::string& m) { memory = m; }
+void Tablet::setMaterial(const std::string& m) { material = m; }
+void Tablet::setHasStylus(bool s) { hasStylus = s; }
+
+void Tablet::printInfo() const {
+    std::cout << "Tablet: " << brand << ", Stylus: " << (hasStylus ? "Yes" : "No") << "\n";
 }
 
-std::string PackagingProcess::getPackageType() const { return packageType; }
-std::string PackagingProcess::getMaterials() const { return materials; }
-std::string PackagingProcess::getDesign() const { return design; }
-
-void PackagingProcess::setPackageType(const std::string& t) {
-    if (t.empty())
-        throw std::invalid_argument("Тип упаковки не може бути порожнім.");
-    packageType = t;
+bool Tablet::checkStylusSupport() const {
+    return hasStylus;
 }
 
-void PackagingProcess::setMaterials(const std::string& m) {
-    if (m.empty())
-        throw std::invalid_argument("Матеріали не можуть бути порожніми.");
-    materials = m;
+// --- LAPTOP ---
+
+Laptop::Laptop() : Electronics(), keyboardType("Standard"), audioInfo("Stereo"), wireless("Wi-Fi") {}
+
+Laptop::Laptop(const std::string& type, const std::string& os, const std::string& brand, double price,
+    const std::string& keyboardType, const std::string& audioInfo, const std::string& wireless)
+    : Electronics(type, os, brand, price) {
+    setKeyboardType(keyboardType);
+    setAudioInfo(audioInfo);
+    setWireless(wireless);
 }
 
-void PackagingProcess::setDesign(const std::string& d) {
-    if (d.empty())
-        throw std::invalid_argument("Дизайн не може бути порожнім.");
-    design = d;
+std::string Laptop::getKeyboardType() const { return keyboardType; }
+std::string Laptop::getAudioInfo() const { return audioInfo; }
+std::string Laptop::getWireless() const { return wireless; }
+
+void Laptop::setKeyboardType(const std::string& k) { keyboardType = k; }
+void Laptop::setAudioInfo(const std::string& a) { audioInfo = a; }
+void Laptop::setWireless(const std::string& w) { wireless = w; }
+
+void Laptop::printInfo() const {
+    std::cout << "Laptop: " << brand << ", OS: " << os << "\n";
 }
 
-void PackagingProcess::printInfo() const {
-
+bool Laptop::hasWifiSupport() const {
+    // Шукаємо слово "wifi" або "wi-fi"
+    std::string w = wireless;
+    std::transform(w.begin(), w.end(), w.begin(), ::tolower);
+    return (w.find("fi") != std::string::npos);
 }
-
-bool PackagingProcess::matchesCriteria(const std::string& type,
-    const std::string& materialSubstring) const
-{
-    bool typeOk = (trim(type).empty() || toLowerStr(trim(packageType)) == toLowerStr(trim(type)));
-
-    std::string matField = toLowerStr(trim(materials));
-    std::string query = toLowerStr(trim(materialSubstring));
-
-    bool materialOk = query.empty() || (matField.find(query) != std::string::npos);
-
-    return typeOk && materialOk;
-}
-

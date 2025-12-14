@@ -5,7 +5,7 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace msclr::interop;
 
-
+// --- Допоміжні методи конвертації рядків ---
 String^ ProductionSystemWrapper::StringToCli(const std::string& s) {
     return gcnew String(s.c_str());
 }
@@ -14,7 +14,7 @@ std::string ProductionSystemWrapper::StringToCpp(String^ s) {
     return context.marshal_as<std::string>(s);
 }
 
-
+// --- Конструктор / Деструктор ---
 ProductionSystemWrapper::ProductionSystemWrapper()
 {
     systemPtr = new ProductionSystem();
@@ -33,7 +33,7 @@ ProductionSystemWrapper::!ProductionSystemWrapper()
     }
 }
 
-
+// --- Файли ---
 void ProductionSystemWrapper::SaveToFile(String^ filename)
 {
     try {
@@ -54,208 +54,161 @@ void ProductionSystemWrapper::LoadFromFile(String^ filename)
     }
 }
 
+// --- Отримання списків (Get All) ---
 
-List<AssemblyData^>^ ProductionSystemWrapper::GetAllAssemblies()
+List<PhoneData^>^ ProductionSystemWrapper::GetAllPhones()
 {
-    List<AssemblyData^>^ list = gcnew List<AssemblyData^>();
-    for (const auto& a : systemPtr->getAssemblies()) {
-        AssemblyData^ data = gcnew AssemblyData();
-        data->Id = StringToCli(a.getId());
-        data->Duration = a.getDuration();
-        data->Workers = a.getWorkers();
-        data->Location = StringToCli(a.getLocation());
-        data->PartsCount = a.getPartsCount();
-        data->AssemblyTime = a.getAssemblyTime();
-        data->Tool = StringToCli(a.getTool());
+    List<PhoneData^>^ list = gcnew List<PhoneData^>();
+    for (const auto& p : systemPtr->getPhones()) {
+        PhoneData^ data = gcnew PhoneData();
+        data->Type = StringToCli(p.getType());
+        data->OS = StringToCli(p.getOs());
+        data->Brand = StringToCli(p.getBrand());
+        data->Price = p.getPrice();
+        data->ScreenSize = p.getScreenSize();
+        data->SimType = StringToCli(p.getSimType());
+        data->Battery = StringToCli(p.getBattery());
         list->Add(data);
     }
     return list;
 }
 
-List<TestingData^>^ ProductionSystemWrapper::GetAllTests()
+List<TabletData^>^ ProductionSystemWrapper::GetAllTablets()
 {
-    List<TestingData^>^ list = gcnew List<TestingData^>();
-    for (const auto& t : systemPtr->getTests()) {
-        TestingData^ data = gcnew TestingData();
-        data->Id = StringToCli(t.getId());
-        data->Duration = t.getDuration();
-        data->Workers = t.getWorkers();
-        data->Location = StringToCli(t.getLocation());
-        data->TestType = StringToCli(t.getTestType());
-        data->Parameters = StringToCli(t.getParameters());
-        data->Status = StringToCli(t.getStatus());
-        data->MaxLoad = t.getMaxLoad();
-        data->MeasuredTolerance = t.getMeasuredTolerance();
-        data->TargetTolerance = t.getTargetTolerance();
-        data->HasPassedSafety = t.getHasPassedSafety();
-
+    List<TabletData^>^ list = gcnew List<TabletData^>();
+    for (const auto& t : systemPtr->getTablets()) {
+        TabletData^ data = gcnew TabletData();
+        data->Type = StringToCli(t.getType());
+        data->OS = StringToCli(t.getOs());
+        data->Brand = StringToCli(t.getBrand());
+        data->Price = t.getPrice();
+        data->Memory = StringToCli(t.getMemory());
+        data->Material = StringToCli(t.getMaterial());
+        data->HasStylus = t.getHasStylus();
         list->Add(data);
     }
     return list;
 }
 
-List<PackagingData^>^ ProductionSystemWrapper::GetAllPackagings()
+List<LaptopData^>^ ProductionSystemWrapper::GetAllLaptops()
 {
-    List<PackagingData^>^ list = gcnew List<PackagingData^>();
-    for (const auto& p : systemPtr->getPackages()) {
-        PackagingData^ data = gcnew PackagingData();
-        data->Id = StringToCli(p.getId());
-        data->Duration = p.getDuration();
-        data->Workers = p.getWorkers();
-        data->Location = StringToCli(p.getLocation());
-        data->PackageType = StringToCli(p.getPackageType());
-        data->Materials = StringToCli(p.getMaterials());
-        data->Design = StringToCli(p.getDesign());
+    List<LaptopData^>^ list = gcnew List<LaptopData^>();
+    for (const auto& l : systemPtr->getLaptops()) {
+        LaptopData^ data = gcnew LaptopData();
+        data->Type = StringToCli(l.getType());
+        data->OS = StringToCli(l.getOs());
+        data->Brand = StringToCli(l.getBrand());
+        data->Price = l.getPrice();
+        data->KeyboardType = StringToCli(l.getKeyboardType());
+        data->AudioInfo = StringToCli(l.getAudioInfo());
+        data->Wireless = StringToCli(l.getWireless());
         list->Add(data);
     }
     return list;
 }
 
-void ProductionSystemWrapper::AddAssembly(AssemblyData^ data)
-{
-    try {
-        AssemblyProcess a(
-            StringToCpp(data->Id), data->Duration, data->Workers, StringToCpp(data->Location),
-            data->PartsCount, data->AssemblyTime, StringToCpp(data->Tool)
-        );
-        systemPtr->addAssembly(a);
-    }
-    catch (const std::exception& ex) {
-        throw gcnew Exception(StringToCli(ex.what()));
-    }
-}
-void ProductionSystemWrapper::AddTesting(TestingData^ data)
-{
-    try {
-        std::string location = StringToCpp(data->Location);
-        std::string testType = StringToCpp(data->TestType);
-        std::string parameters = StringToCpp(data->Parameters);
-        std::string status = StringToCpp(data->Status);
+// --- Додавання (Add) ---
 
-        TestingProcess t(
-            StringToCpp(data->Id),
-            data->Duration,
-            data->Workers,
-            location,
-            testType,
-            parameters,
-            status,
-            data->MaxLoad,
-            data->MeasuredTolerance,
-            data->TargetTolerance,
-            data->HasPassedSafety
-        );
-
-        systemPtr->addTesting(t);
-    }
-    catch (const std::exception& ex) {
-        throw gcnew Exception("Помилка при додаванні випробування: " + StringToCli(ex.what()));
-    }
-}
-void ProductionSystemWrapper::AddPackaging(PackagingData^ data)
+void ProductionSystemWrapper::AddPhone(PhoneData^ data)
 {
-    try {
-        PackagingProcess a(
-            StringToCpp(data->Id), data->Duration, data->Workers, StringToCpp(data->Location),
-            StringToCpp(data->PackageType), StringToCpp(data->Materials), StringToCpp(data->Design)
-        );
-        systemPtr->addPackaging(a);
-    }
-    catch (const std::exception& ex) {
-        throw gcnew Exception(StringToCli(ex.what()));
-    }
-}
-
-bool ProductionSystemWrapper::UpdateAssembly(AssemblyData^ data)
-{
-    std::string id = StringToCpp(data->Id);
-    std::string location = StringToCpp(data->Location);
-    std::string tool = StringToCpp(data->Tool);
-
-    return systemPtr->updateAssembly(
-        id,
-        data->Duration,
-        data->Workers,
-        data->PartsCount,
-        data->AssemblyTime,
-        tool
+    Phone p(
+        StringToCpp(data->Type), StringToCpp(data->OS), StringToCpp(data->Brand), data->Price,
+        data->ScreenSize, StringToCpp(data->SimType), StringToCpp(data->Battery)
     );
+    systemPtr->addPhone(p);
 }
 
-bool ProductionSystemWrapper::UpdateTestingStatus(String^ id, String^ newStatus)
+void ProductionSystemWrapper::AddTablet(TabletData^ data)
 {
-    std::string cppId = StringToCpp(id);
-    std::string cppStatus = StringToCpp(newStatus);
-    return systemPtr->updateTesting(cppId, cppStatus);
+    Tablet t(
+        StringToCpp(data->Type), StringToCpp(data->OS), StringToCpp(data->Brand), data->Price,
+        StringToCpp(data->Memory), StringToCpp(data->Material), data->HasStylus
+    );
+    systemPtr->addTablet(t);
 }
 
-bool ProductionSystemWrapper::UpdatePackagingDesign(String^ id, String^ newDesign)
+void ProductionSystemWrapper::AddLaptop(LaptopData^ data)
 {
-    std::string cppId = StringToCpp(id);
-    std::string cppDesign = StringToCpp(newDesign);
-    return systemPtr->updatePackaging(cppId, cppDesign);
+    Laptop l(
+        StringToCpp(data->Type), StringToCpp(data->OS), StringToCpp(data->Brand), data->Price,
+        StringToCpp(data->KeyboardType), StringToCpp(data->AudioInfo), StringToCpp(data->Wireless)
+    );
+    systemPtr->addLaptop(l);
 }
 
+// --- Оновлення (Update) ---
 
-AssemblyData^ ProductionSystemWrapper::GetAssemblyWithMaxDuration()
+bool ProductionSystemWrapper::UpdatePhone(String^ originalType, double price, double screen, String^ sim, String^ bat)
 {
-    const AssemblyProcess* maxA = systemPtr->findAssemblyWithMaxDuration();
-    if (!maxA) return nullptr;
-
-    AssemblyData^ data = gcnew AssemblyData();
-    data->Id = StringToCli(maxA->getId());
-    data->Duration = maxA->getDuration();
-    data->Workers = maxA->getWorkers();
-    data->Location = StringToCli(maxA->getLocation());
-    data->PartsCount = maxA->getPartsCount();
-    data->AssemblyTime = maxA->getAssemblyTime();
-    data->Tool = StringToCli(maxA->getTool());
-    return data;
+    return systemPtr->updatePhone(StringToCpp(originalType), price, screen, StringToCpp(sim), StringToCpp(bat));
 }
 
-List<TestingData^>^ ProductionSystemWrapper::GetAnalyzedTests()
+bool ProductionSystemWrapper::UpdateTablet(String^ originalType, double price, String^ mem, String^ mat, bool stylus)
 {
-    List<TestingData^>^ list = gcnew List<TestingData^>();
+    return systemPtr->updateTablet(StringToCpp(originalType), price, StringToCpp(mem), StringToCpp(mat), stylus);
+}
 
-    for (const auto& t : systemPtr->getTests()) {
-        TestingData^ data = gcnew TestingData();
-        data->Id = StringToCli(t.getId());
-        data->Duration = t.getDuration();
-        data->Workers = t.getWorkers();
-        data->Location = StringToCli(t.getLocation());
-        data->TestType = StringToCli(t.getTestType());
-        data->Parameters = StringToCli(t.getParameters());
-        data->Status = StringToCli(t.getStatus());
-		data->MaxLoad = t.getMaxLoad();
-		data->MeasuredTolerance = t.getMeasuredTolerance();
-		data->TargetTolerance = t.getTargetTolerance();
-		data->HasPassedSafety = t.getHasPassedSafety();
-        data->AnalysisResult = StringToCli(t.analyzeResults());
+bool ProductionSystemWrapper::UpdateLaptop(String^ originalType, double price, String^ keyb, String^ aud, String^ wire)
+{
+    return systemPtr->updateLaptop(StringToCpp(originalType), price, StringToCpp(keyb), StringToCpp(aud), StringToCpp(wire));
+}
+
+// --- Спеціальні запити (Specific Queries) ---
+
+List<PhoneData^>^ ProductionSystemWrapper::GetSingleSimPhones()
+{
+    List<PhoneData^>^ list = gcnew List<PhoneData^>();
+    // Отримуємо вектор знайдених телефонів
+    std::vector<Phone> found = systemPtr->findSingleSimPhones();
+
+    for (const auto& p : found) {
+        PhoneData^ data = gcnew PhoneData();
+        data->Type = StringToCli(p.getType());
+        data->OS = StringToCli(p.getOs());
+        data->Brand = StringToCli(p.getBrand());
+        data->Price = p.getPrice();
+        data->ScreenSize = p.getScreenSize();
+        data->SimType = StringToCli(p.getSimType());
+        data->Battery = StringToCli(p.getBattery());
         list->Add(data);
     }
     return list;
 }
 
-List<PackagingData^>^ ProductionSystemWrapper::FindPackagingByCriteria(String^ type, String^ materialSubstring)
+List<TabletData^>^ ProductionSystemWrapper::GetTabletsWithStylus()
 {
-    std::string cppType = StringToCpp(type);
-    std::string cppMaterial = StringToCpp(materialSubstring);
+    List<TabletData^>^ list = gcnew List<TabletData^>();
+    std::vector<Tablet> found = systemPtr->findTabletsWithStylus();
 
-    std::vector<PackagingProcess> foundCpp = systemPtr->findPackagingByCriteriaReturn(cppType, cppMaterial);
-
-    List<PackagingData^>^ foundCli = gcnew List<PackagingData^>();
-
-    for (const auto& p : foundCpp) {
-        PackagingData^ data = gcnew PackagingData();
-        data->Id = StringToCli(p.getId());
-        data->Duration = p.getDuration();
-        data->Workers = p.getWorkers();
-        data->Location = StringToCli(p.getLocation());
-        data->PackageType = StringToCli(p.getPackageType());
-        data->Materials = StringToCli(p.getMaterials());
-        data->Design = StringToCli(p.getDesign());
-        foundCli->Add(data);
+    for (const auto& t : found) {
+        TabletData^ data = gcnew TabletData();
+        data->Type = StringToCli(t.getType());
+        data->OS = StringToCli(t.getOs());
+        data->Brand = StringToCli(t.getBrand());
+        data->Price = t.getPrice();
+        data->Memory = StringToCli(t.getMemory());
+        data->Material = StringToCli(t.getMaterial());
+        data->HasStylus = t.getHasStylus();
+        list->Add(data);
     }
+    return list;
+}
 
-    return foundCli;
+List<LaptopData^>^ ProductionSystemWrapper::GetLaptopsWithWifi()
+{
+    List<LaptopData^>^ list = gcnew List<LaptopData^>();
+    std::vector<Laptop> found = systemPtr->findLaptopsWithWifi();
+
+    for (const auto& l : found) {
+        LaptopData^ data = gcnew LaptopData();
+        data->Type = StringToCli(l.getType());
+        data->OS = StringToCli(l.getOs());
+        data->Brand = StringToCli(l.getBrand());
+        data->Price = l.getPrice();
+        data->KeyboardType = StringToCli(l.getKeyboardType());
+        data->AudioInfo = StringToCli(l.getAudioInfo());
+        data->Wireless = StringToCli(l.getWireless());
+        list->Add(data);
+    }
+    return list;
 }

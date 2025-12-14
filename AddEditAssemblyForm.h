@@ -13,240 +13,145 @@ namespace CW {
     public ref class AddEditAssemblyForm : public System::Windows::Forms::Form
     {
     public:
-        property AssemblyData^ ResultData;
+        property PhoneData^ ResultData; // Змінили на PhoneData
 
-        AddEditAssemblyForm(AssemblyData^ inputData)
+        AddEditAssemblyForm(PhoneData^ inputData)
         {
             InitializeComponent();
             ResultData = inputData;
 
             if (inputData != nullptr) {
-                this->Text = "Редагувати Збірку: " + inputData->Id;
+                this->Text = "Редагувати Телефон: " + inputData->Type;
 
-                txtId->Text = inputData->Id;
-                txtId->ReadOnly = true;
+                // Заповнюємо поля
+                txtType->Text = inputData->Type;
+                txtType->ReadOnly = true; // Тип (як ID) не змінюємо при редагуванні
 
-                txtDuration->Text = inputData->Duration.ToString();
-                txtWorkers->Text = inputData->Workers.ToString();
-                txtLocation->Text = inputData->Location;
-                txtPartsCount->Text = inputData->PartsCount.ToString();
-                txtAssemblyTime->Text = inputData->AssemblyTime.ToString();
-                txtTool->Text = inputData->Tool;
+                txtOS->Text = inputData->OS;
+                txtBrand->Text = inputData->Brand;
+                txtPrice->Text = inputData->Price.ToString();
+                txtScreen->Text = inputData->ScreenSize.ToString();
+                txtSim->Text = inputData->SimType;
+                txtBattery->Text = inputData->Battery;
             }
             else {
-                this->Text = "Додати нову Збірку";
-                txtId->ReadOnly = false;
+                this->Text = "Додати новий Телефон";
+                txtType->ReadOnly = false;
             }
         }
 
     protected:
         ~AddEditAssemblyForm()
         {
-            if (components)
-            {
-                delete components;
-            }
+            if (components) delete components;
         }
 
-    private: System::Windows::Forms::Label^ lblId;
-    private: System::Windows::Forms::TextBox^ txtId;
+        // --- Поля форми ---
+    private: System::Windows::Forms::Label^ lblType;
+    private: System::Windows::Forms::TextBox^ txtType;
+    private: System::Windows::Forms::Label^ lblOS;
+    private: System::Windows::Forms::TextBox^ txtOS;
+    private: System::Windows::Forms::Label^ lblBrand;
+    private: System::Windows::Forms::TextBox^ txtBrand;
+    private: System::Windows::Forms::Label^ lblPrice;
+    private: System::Windows::Forms::TextBox^ txtPrice;
 
-    private: System::Windows::Forms::Label^ lblDuration;
-    private: System::Windows::Forms::TextBox^ txtDuration;
-
-    private: System::Windows::Forms::Label^ lblWorkers;
-    private: System::Windows::Forms::TextBox^ txtWorkers;
-
-    private: System::Windows::Forms::Label^ lblLocation;
-    private: System::Windows::Forms::TextBox^ txtLocation;
-
-    private: System::Windows::Forms::Label^ lblPartsCount;
-    private: System::Windows::Forms::TextBox^ txtPartsCount;
-
-    private: System::Windows::Forms::Label^ lblAssemblyTime;
-    private: System::Windows::Forms::TextBox^ txtAssemblyTime;
-
-    private: System::Windows::Forms::Label^ lblTool;
-    private: System::Windows::Forms::TextBox^ txtTool;
+           // Специфічні для телефону
+    private: System::Windows::Forms::Label^ lblScreen;
+    private: System::Windows::Forms::TextBox^ txtScreen;
+    private: System::Windows::Forms::Label^ lblSim;
+    private: System::Windows::Forms::TextBox^ txtSim;
+    private: System::Windows::Forms::Label^ lblBattery;
+    private: System::Windows::Forms::TextBox^ txtBattery;
 
     private: System::Windows::Forms::Button^ btnOK;
     private: System::Windows::Forms::Button^ btnCancel;
-
     private: System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
            void InitializeComponent(void)
            {
                this->SuspendLayout();
-               this->ClientSize = System::Drawing::Size(620, 300);
+               this->ClientSize = System::Drawing::Size(400, 350);
                this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
-               this->MaximizeBox = false;
-               this->MinimizeBox = false;
                this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
-               this->BackColor = System::Drawing::Color::WhiteSmoke;
+               this->Text = L"Телефон";
 
-               int labelWidth = 150;
-               int inputWidth = 150;
-               int x1 = -10;
-               int x2 = 290;
-               int yStart = 20;
-               int yStep = 40;
-               int y = yStart;
+               int y = 20; int lblW = 120; int txtW = 200; int gap = 35;
 
-               this->lblId = (gcnew System::Windows::Forms::Label());
-               this->lblId->Text = L"ID процесу:";
-               this->lblId->Location = System::Drawing::Point(x1, y);
-               this->lblId->Size = System::Drawing::Size(labelWidth, 20);
-               this->lblId->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-               this->Controls->Add(this->lblId);
+               // Type
+               lblType = gcnew Label(); lblType->Text = "Модель (Type):"; lblType->Location = Point(10, y); lblType->Size = System::Drawing::Size(lblW, 20);
+               txtType = gcnew TextBox(); txtType->Location = Point(140, y); txtType->Size = System::Drawing::Size(txtW, 20);
+               this->Controls->Add(lblType); this->Controls->Add(txtType); y += gap;
 
-               this->txtId = (gcnew System::Windows::Forms::TextBox());
-               this->txtId->Location = System::Drawing::Point(x1 + labelWidth + 5, y);
-               this->txtId->Size = System::Drawing::Size(inputWidth, 20);
-               this->Controls->Add(this->txtId);
-               y += yStep;
+               // OS
+               lblOS = gcnew Label(); lblOS->Text = "ОС (Android/iOS):"; lblOS->Location = Point(10, y); lblOS->Size = System::Drawing::Size(lblW, 20);
+               txtOS = gcnew TextBox(); txtOS->Location = Point(140, y); txtOS->Size = System::Drawing::Size(txtW, 20);
+               this->Controls->Add(lblOS); this->Controls->Add(txtOS); y += gap;
 
-               this->lblDuration = (gcnew System::Windows::Forms::Label());
-               this->lblDuration->Text = L"Тривалість (год):";
-               this->lblDuration->Location = System::Drawing::Point(x1, y);
-               this->lblDuration->Size = System::Drawing::Size(labelWidth, 20);
-               this->lblDuration->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-               this->Controls->Add(this->lblDuration);
+               // Brand
+               lblBrand = gcnew Label(); lblBrand->Text = "Бренд:"; lblBrand->Location = Point(10, y); lblBrand->Size = System::Drawing::Size(lblW, 20);
+               txtBrand = gcnew TextBox(); txtBrand->Location = Point(140, y); txtBrand->Size = System::Drawing::Size(txtW, 20);
+               this->Controls->Add(lblBrand); this->Controls->Add(txtBrand); y += gap;
 
-               this->txtDuration = (gcnew System::Windows::Forms::TextBox());
-               this->txtDuration->Location = System::Drawing::Point(x1 + labelWidth + 5, y);
-               this->txtDuration->Size = System::Drawing::Size(inputWidth, 20);
-               this->Controls->Add(this->txtDuration);
-               y += yStep;
+               // Price
+               lblPrice = gcnew Label(); lblPrice->Text = "Ціна:"; lblPrice->Location = Point(10, y); lblPrice->Size = System::Drawing::Size(lblW, 20);
+               txtPrice = gcnew TextBox(); txtPrice->Location = Point(140, y); txtPrice->Size = System::Drawing::Size(txtW, 20);
+               this->Controls->Add(lblPrice); this->Controls->Add(txtPrice); y += gap;
 
-               this->lblWorkers = (gcnew System::Windows::Forms::Label());
-               this->lblWorkers->Text = L"К-ть працівників:";
-               this->lblWorkers->Location = System::Drawing::Point(x1, y);
-               this->lblWorkers->Size = System::Drawing::Size(labelWidth, 20);
-               this->lblWorkers->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-               this->Controls->Add(this->lblWorkers);
+               // Screen
+               lblScreen = gcnew Label(); lblScreen->Text = "Діагональ:"; lblScreen->Location = Point(10, y); lblScreen->Size = System::Drawing::Size(lblW, 20);
+               txtScreen = gcnew TextBox(); txtScreen->Location = Point(140, y); txtScreen->Size = System::Drawing::Size(txtW, 20);
+               this->Controls->Add(lblScreen); this->Controls->Add(txtScreen); y += gap;
 
-               this->txtWorkers = (gcnew System::Windows::Forms::TextBox());
-               this->txtWorkers->Location = System::Drawing::Point(x1 + labelWidth + 5, y);
-               this->txtWorkers->Size = System::Drawing::Size(inputWidth, 20);
-               this->Controls->Add(this->txtWorkers);
-               y += yStep;
+               // SIM
+               lblSim = gcnew Label(); lblSim->Text = "Тип SIM:"; lblSim->Location = Point(10, y); lblSim->Size = System::Drawing::Size(lblW, 20);
+               txtSim = gcnew TextBox(); txtSim->Location = Point(140, y); txtSim->Size = System::Drawing::Size(txtW, 20);
+               this->Controls->Add(lblSim); this->Controls->Add(txtSim); y += gap;
 
-               this->lblLocation = (gcnew System::Windows::Forms::Label());
-               this->lblLocation->Text = L"Місцезнаходження:";
-               this->lblLocation->Location = System::Drawing::Point(x1, y);
-               this->lblLocation->Size = System::Drawing::Size(labelWidth, 20);
-               this->lblLocation->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-               this->Controls->Add(this->lblLocation);
+               // Battery
+               lblBattery = gcnew Label(); lblBattery->Text = "Батарея:"; lblBattery->Location = Point(10, y); lblBattery->Size = System::Drawing::Size(lblW, 20);
+               txtBattery = gcnew TextBox(); txtBattery->Location = Point(140, y); txtBattery->Size = System::Drawing::Size(txtW, 20);
+               this->Controls->Add(lblBattery); this->Controls->Add(txtBattery); y += gap + 10;
 
-               this->txtLocation = (gcnew System::Windows::Forms::TextBox());
-               this->txtLocation->Location = System::Drawing::Point(x1 + labelWidth + 5, y);
-               this->txtLocation->Size = System::Drawing::Size(inputWidth, 20);
-               this->Controls->Add(this->txtLocation);
+               // Buttons
+               btnOK = gcnew Button(); btnOK->Text = "OK"; btnOK->Location = Point(180, y); btnOK->DialogResult = System::Windows::Forms::DialogResult::OK;
+               btnOK->Click += gcnew EventHandler(this, &AddEditAssemblyForm::btnOK_Click);
 
-               y = yStart;
+               btnCancel = gcnew Button(); btnCancel->Text = "Cancel"; btnCancel->Location = Point(270, y); btnCancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
 
-               this->lblPartsCount = (gcnew System::Windows::Forms::Label());
-               this->lblPartsCount->Text = L"К-ть деталей:";
-               this->lblPartsCount->Location = System::Drawing::Point(x2, y);
-               this->lblPartsCount->Size = System::Drawing::Size(labelWidth, 20);
-               this->lblPartsCount->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-               this->Controls->Add(this->lblPartsCount);
-
-               this->txtPartsCount = (gcnew System::Windows::Forms::TextBox());
-               this->txtPartsCount->Location = System::Drawing::Point(x2 + labelWidth + 5, y);
-               this->txtPartsCount->Size = System::Drawing::Size(inputWidth, 20);
-               this->Controls->Add(this->txtPartsCount);
-               y += yStep;
-
-               this->lblAssemblyTime = (gcnew System::Windows::Forms::Label());
-               this->lblAssemblyTime->Text = L"Час збирання (год):";
-               this->lblAssemblyTime->Location = System::Drawing::Point(x2, y);
-               this->lblAssemblyTime->Size = System::Drawing::Size(labelWidth, 20);
-               this->lblAssemblyTime->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-               this->Controls->Add(this->lblAssemblyTime);
-
-               this->txtAssemblyTime = (gcnew System::Windows::Forms::TextBox());
-               this->txtAssemblyTime->Location = System::Drawing::Point(x2 + labelWidth + 5, y);
-               this->txtAssemblyTime->Size = System::Drawing::Size(inputWidth, 20);
-               this->Controls->Add(this->txtAssemblyTime);
-               y += yStep;
-
-               this->lblTool = (gcnew System::Windows::Forms::Label());
-               this->lblTool->Text = L"Інструмент:";
-               this->lblTool->Location = System::Drawing::Point(x2, y);
-               this->lblTool->Size = System::Drawing::Size(labelWidth, 20);
-               this->lblTool->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-               this->Controls->Add(this->lblTool);
-
-               this->txtTool = (gcnew System::Windows::Forms::TextBox());
-               this->txtTool->Location = System::Drawing::Point(x2 + labelWidth + 5, y);
-               this->txtTool->Size = System::Drawing::Size(inputWidth, 20);
-               this->Controls->Add(this->txtTool);
-
-               int btnY = 240;
-               int btnWidth = 100;
-               int btnSpacing = 20;
-
-               this->btnOK = (gcnew System::Windows::Forms::Button());
-               this->btnOK->Text = L"OK";
-               this->btnOK->Location = System::Drawing::Point(620 - btnWidth * 2 - btnSpacing * 2, btnY);
-               this->btnOK->Size = System::Drawing::Size(btnWidth, 30);
-               this->btnOK->DialogResult = System::Windows::Forms::DialogResult::OK;
-               this->btnOK->Click += gcnew System::EventHandler(this, &AddEditAssemblyForm::btnOK_Click);
-               this->Controls->Add(this->btnOK);
-
-               this->btnCancel = (gcnew System::Windows::Forms::Button());
-               this->btnCancel->Text = L"Скасувати";
-               this->btnCancel->Location = System::Drawing::Point(620 - btnWidth - btnSpacing, btnY);
-               this->btnCancel->Size = System::Drawing::Size(btnWidth, 30);
-               this->btnCancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
-               this->Controls->Add(this->btnCancel);
-
+               this->Controls->Add(btnOK); this->Controls->Add(btnCancel);
                this->ResumeLayout(false);
-               this->PerformLayout();
            }
 #pragma endregion
 
     private: System::Void btnOK_Click(System::Object^ sender, System::EventArgs^ e) {
         try {
-            if (txtId->Text->Length == 0 || txtLocation->Text->Length == 0 || txtTool->Text->Length == 0) {
-                throw gcnew Exception("Поля ID, Місцезнаходження та Інструмент не можуть бути порожніми.");
-            }
+            // Валідація
+            if (String::IsNullOrWhiteSpace(txtType->Text) || String::IsNullOrWhiteSpace(txtBrand->Text))
+                throw gcnew Exception("Поля 'Модель' та 'Бренд' обов'язкові!");
 
-            double duration = Double::Parse(txtDuration->Text);
-            int workers = Int32::Parse(txtWorkers->Text);
-            int partsCount = Int32::Parse(txtPartsCount->Text);
-            double assemblyTime = Double::Parse(txtAssemblyTime->Text);
+            double price = Double::Parse(txtPrice->Text);
+            double screen = Double::Parse(txtScreen->Text);
 
-            if (duration <= 0 || workers <= 0 || partsCount <= 0 || assemblyTime <= 0) {
-                throw gcnew Exception("Тривалість, працівники, деталі та час збирання повинні бути більші за 0.");
-            }
+            if (price < 0 || screen <= 0) throw gcnew Exception("Ціна та екран мають бути додатніми числами.");
 
-            if (ResultData == nullptr) {
-                ResultData = gcnew AssemblyData();
-            }
+            if (ResultData == nullptr) ResultData = gcnew PhoneData();
 
-            ResultData->Id = txtId->Text;
-            ResultData->Duration = duration;
-            ResultData->Workers = workers;
-            ResultData->Location = txtLocation->Text;
-            ResultData->PartsCount = partsCount;
-            ResultData->AssemblyTime = assemblyTime;
-            ResultData->Tool = txtTool->Text;
+            ResultData->Type = txtType->Text;
+            ResultData->OS = txtOS->Text;
+            ResultData->Brand = txtBrand->Text;
+            ResultData->Price = price;
+            ResultData->ScreenSize = screen;
+            ResultData->SimType = txtSim->Text;
+            ResultData->Battery = txtBattery->Text;
 
             this->Close();
         }
         catch (Exception^ ex) {
-            MessageBox::Show("Невірний формат або значення даних. " + ex->Message,
-                "Помилка вводу", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
+            MessageBox::Show("Помилка: " + ex->Message);
             this->DialogResult = System::Windows::Forms::DialogResult::None;
         }
-    }
-
-    private: System::Void btnCancel_Click(System::Object^ sender, System::EventArgs^ e) {
-        this->Close();
     }
     };
 }

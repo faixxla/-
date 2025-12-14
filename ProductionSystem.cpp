@@ -5,211 +5,170 @@
 #include <sstream>
 #include <stdexcept>
 
-void ProductionSystem::addAssembly(const AssemblyProcess& a) {
-    assemblies.push_back(a);
+// --- Додавання ---
+void ProductionSystem::addPhone(const Phone& p) {
+    phones.push_back(p);
 }
 
-void ProductionSystem::addTesting(const TestingProcess& t) {
-    tests.push_back(t);
+void ProductionSystem::addTablet(const Tablet& t) {
+    tablets.push_back(t);
 }
 
-void ProductionSystem::addPackaging(const PackagingProcess& p) {
-    packages.push_back(p);
+void ProductionSystem::addLaptop(const Laptop& l) {
+    laptops.push_back(l);
 }
 
-template<typename T>
-T* findById(std::vector<T>& vec, const std::string& id);
+// --- Оновлення (шукаємо за полем Type, який виступає як назва моделі) ---
 
-bool ProductionSystem::updateAssembly(const std::string& id, double duration, int workers, int partsCount, double assemblyTime, const std::string& tool) {
-    AssemblyProcess* a = findById(assemblies, id);
-    if (!a) return false;
-
-    try {
-        a->setDuration(duration);
-        a->setWorkers(workers);
-        a->setPartsCount(partsCount);
-        a->setAssemblyTime(assemblyTime);
-        a->setTool(tool);
-        return true;
-    }
-    catch (const std::exception& ex) {
-        std::cerr << "Помилка при оновленні збірки: " << ex.what() << "\n";
-        return false;
-    }
-}
-
-bool ProductionSystem::updateTesting(const std::string& id, const std::string& status) {
-    TestingProcess* t = findById(tests, id);
-    if (!t) return false;
-
-    try {
-        t->setStatus(status);
-        return true;
-    }
-    catch (const std::exception& ex) {
-        std::cerr << "Помилка при оновленні випробування: " << ex.what() << "\n";
-        return false;
-    }
-}
-
-bool ProductionSystem::updatePackaging(const std::string& id, const std::string& design) {
-    PackagingProcess* p = findById(packages, id);
-    if (!p) return false;
-
-    try {
-        p->setDesign(design);
-        return true;
-    }
-    catch (const std::exception& ex) {
-        std::cerr << "Помилка при оновленні упаковки: " << ex.what() << "\n";
-        return false;
-    }
-}
-
-std::vector<PackagingProcess> ProductionSystem::findPackagingByCriteriaReturn(
-    const std::string& type,
-    const std::string& materialSubstring
-) const
-{
-    std::vector<PackagingProcess> found;
-    std::copy_if(
-        packages.begin(),
-        packages.end(),
-        std::back_inserter(found),
-        [&](const PackagingProcess& p) {
-            return p.matchesCriteria(type, materialSubstring);
+bool ProductionSystem::updatePhone(const std::string& originalType, double price, double screenSize, const std::string& simType, const std::string& battery) {
+    for (auto& p : phones) {
+        if (p.getType() == originalType) {
+            p.setPrice(price);
+            p.setScreenSize(screenSize);
+            p.setSimType(simType);
+            p.setBattery(battery);
+            return true;
         }
-    );
-
-    return found;
-}
-
-const AssemblyProcess* ProductionSystem::findAssemblyWithMaxDuration() const {
-    if (assemblies.empty()) {
-        return nullptr;
     }
-    auto it = std::max_element(assemblies.begin(), assemblies.end(), CompareByDuration());
-    return &(*it);
+    return false;
 }
+
+bool ProductionSystem::updateTablet(const std::string& originalType, double price, const std::string& memory, const std::string& material, bool hasStylus) {
+    for (auto& t : tablets) {
+        if (t.getType() == originalType) {
+            t.setPrice(price);
+            t.setMemory(memory);
+            t.setMaterial(material);
+            t.setHasStylus(hasStylus);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool ProductionSystem::updateLaptop(const std::string& originalType, double price, const std::string& keyboard, const std::string& audio, const std::string& wireless) {
+    for (auto& l : laptops) {
+        if (l.getType() == originalType) {
+            l.setPrice(price);
+            l.setKeyboardType(keyboard);
+            l.setAudioInfo(audio);
+            l.setWireless(wireless);
+            return true;
+        }
+    }
+    return false;
+}
+
+// --- Спеціальні методи пошуку ---
+
+std::vector<Phone> ProductionSystem::findSingleSimPhones() const {
+    std::vector<Phone> result;
+    for (const auto& p : phones) {
+        if (p.isSingleSim()) {
+            result.push_back(p);
+        }
+    }
+    return result;
+}
+
+std::vector<Tablet> ProductionSystem::findTabletsWithStylus() const {
+    std::vector<Tablet> result;
+    for (const auto& t : tablets) {
+        if (t.checkStylusSupport()) {
+            result.push_back(t);
+        }
+    }
+    return result;
+}
+
+std::vector<Laptop> ProductionSystem::findLaptopsWithWifi() const {
+    std::vector<Laptop> result;
+    for (const auto& l : laptops) {
+        if (l.hasWifiSupport()) {
+            result.push_back(l);
+        }
+    }
+    return result;
+}
+
+// --- Робота з файлами ---
 
 void ProductionSystem::saveToFile(const std::string& filename) const {
     std::ofstream out(filename);
-    if (!out) {
-        throw std::runtime_error("Не вдалося відкрити файл для запису.");
-    }
+    if (!out) throw std::runtime_error("Не вдалося відкрити файл для запису.");
 
-    try {
-        for (const auto& a : assemblies) {
-            out << "A;" << a.getId() << ";" << a.getDuration() << ";"
-                << a.getWorkers() << ";" << a.getLocation() << ";"
-                << a.getPartsCount() << ";" << a.getAssemblyTime() << ";"
-                << a.getTool() << "\n";
-        }
-        for (const auto& t : tests) {
-            out << "T;" << t.getId() << ";" << t.getDuration() << ";"
-                << t.getWorkers() << ";" << t.getLocation() << ";"
-                << t.getTestType() << ";" << t.getParameters() << ";"
-                << t.getStatus() << ";" << t.getMaxLoad() << ";" << t.getMeasuredTolerance() << ";" << t.getTargetTolerance() << ";" << t.getHasPassedSafety() << "\n";
-        }
-        for (const auto& p : packages) {
-            out << "P;" << p.getId() << ";" << p.getDuration() << ";"
-                << p.getWorkers() << ";" << p.getLocation() << ";"
-                << p.getPackageType() << ";" << p.getMaterials() << ";"
-                << p.getDesign() << "\n";
-        }
+    // Формат: P;Type;OS;Brand;Price;Screen;Sim;Battery
+    for (const auto& p : phones) {
+        out << "P;" << p.getType() << ";" << p.getOs() << ";" << p.getBrand() << ";"
+            << p.getPrice() << ";" << p.getScreenSize() << ";" << p.getSimType() << ";" << p.getBattery() << "\n";
     }
-    catch (...) {
-        throw std::runtime_error("Помилка під час запису у файл.");
+    // Формат: T;Type;OS;Brand;Price;Memory;Material;HasStylus(0/1)
+    for (const auto& t : tablets) {
+        out << "T;" << t.getType() << ";" << t.getOs() << ";" << t.getBrand() << ";"
+            << t.getPrice() << ";" << t.getMemory() << ";" << t.getMaterial() << ";" << (t.getHasStylus() ? 1 : 0) << "\n";
+    }
+    // Формат: L;Type;OS;Brand;Price;Keyboard;Audio;Wireless
+    for (const auto& l : laptops) {
+        out << "L;" << l.getType() << ";" << l.getOs() << ";" << l.getBrand() << ";"
+            << l.getPrice() << ";" << l.getKeyboardType() << ";" << l.getAudioInfo() << ";" << l.getWireless() << "\n";
     }
 }
 
 void ProductionSystem::loadFromFile(const std::string& filename) {
     std::ifstream in(filename);
     if (!in) {
-        throw std::runtime_error("Не вдалося відкрити файл для читання.");
+        // Якщо файлу немає, просто очищуємо списки, це не критична помилка для першого запуску
+        phones.clear(); tablets.clear(); laptops.clear();
+        return;
     }
 
-    assemblies.clear();
-    tests.clear();
-    packages.clear();
+    phones.clear();
+    tablets.clear();
+    laptops.clear();
 
     std::string line;
     while (std::getline(in, line)) {
         if (line.empty()) continue;
         std::stringstream ss(line);
-        std::string type;
-        std::getline(ss, type, ';');
+        std::string tag;
+        std::getline(ss, tag, ';');
 
         try {
-            if (type == "A") {
-                std::string id, location, tool;
-                double duration, assemblyTime;
-                int workers, partsCount;
+            std::string type, os, brand, tmp;
+            double price;
 
-                std::string tmp;
-                std::getline(ss, id, ';');
-                std::getline(ss, tmp, ';');   duration = std::stod(tmp);
-                std::getline(ss, tmp, ';');   workers = std::stoi(tmp);
-                std::getline(ss, location, ';');
-                std::getline(ss, tmp, ';');   partsCount = std::stoi(tmp);
-                std::getline(ss, tmp, ';');   assemblyTime = std::stod(tmp);
-                std::getline(ss, tool, ';');
+            // Спільні поля
+            std::getline(ss, type, ';');
+            std::getline(ss, os, ';');
+            std::getline(ss, brand, ';');
+            std::getline(ss, tmp, ';'); price = std::stod(tmp);
 
-                AssemblyProcess a(id, duration, workers, location,
-                    partsCount, assemblyTime, tool);
-                assemblies.push_back(a);
+            if (tag == "P") {
+                double screen;
+                std::string sim, bat;
+                std::getline(ss, tmp, ';'); screen = std::stod(tmp);
+                std::getline(ss, sim, ';');
+                std::getline(ss, bat, ';');
+                phones.emplace_back(type, os, brand, price, screen, sim, bat);
             }
-            else if (type == "T") {
-                std::string id, location, testType, parameters, status;
-                double duration, maxLoad, measuredTolerance, targetTolerance;
-                int workers;
-                bool hasPassedSafety;
-                std::string tmp;
-
-                std::getline(ss, id, ';');
-                std::getline(ss, tmp, ';'); duration = std::stod(tmp);
-                std::getline(ss, tmp, ';'); workers = std::stoi(tmp);
-                std::getline(ss, location, ';');
-                std::getline(ss, testType, ';');
-                std::getline(ss, parameters, ';');
-                std::getline(ss, status, ';');
-
-                std::getline(ss, tmp, ';'); maxLoad = std::stod(tmp);
-                std::getline(ss, tmp, ';'); measuredTolerance = std::stod(tmp);
-                std::getline(ss, tmp, ';'); targetTolerance = std::stod(tmp);
-                std::getline(ss, tmp, ';'); hasPassedSafety = (std::stoi(tmp) != 0);
-
-
-                TestingProcess t(id, duration, workers,
-                    location, testType, parameters, status,
-                    maxLoad, measuredTolerance, targetTolerance, hasPassedSafety);
-                tests.push_back(t);
+            else if (tag == "T") {
+                std::string mem, mat;
+                bool stylus;
+                std::getline(ss, mem, ';');
+                std::getline(ss, mat, ';');
+                std::getline(ss, tmp, ';'); stylus = (std::stoi(tmp) != 0);
+                tablets.emplace_back(type, os, brand, price, mem, mat, stylus);
             }
-            else if (type == "P") {
-                std::string id, location, packageType, materials, design;
-                double duration;
-                int workers;
-                std::string tmp;
-
-                std::getline(ss, id, ';');
-                std::getline(ss, tmp, ';'); duration = std::stod(tmp);
-                std::getline(ss, tmp, ';'); workers = std::stoi(tmp);
-                std::getline(ss, location, ';');
-                std::getline(ss, packageType, ';');
-                std::getline(ss, materials, ';');
-                std::getline(ss, design, ';');
-
-                PackagingProcess p(id, duration, workers, location,
-                    packageType, materials, design);
-                packages.push_back(p);
-            }
-            else {
-                throw std::runtime_error("Невідомий тип запису у файлі.");
+            else if (tag == "L") {
+                std::string keyb, aud, wire;
+                std::getline(ss, keyb, ';');
+                std::getline(ss, aud, ';');
+                std::getline(ss, wire, ';');
+                laptops.emplace_back(type, os, brand, price, keyb, aud, wire);
             }
         }
-        catch (const std::exception& ex) {
-            std::cerr << "Помилка при читанні рядка: " << ex.what()
-                << "\nРядок: " << line << "\n";
+        catch (...) {
+            // Ігноруємо пошкоджені рядки
         }
     }
 }

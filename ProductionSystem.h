@@ -1,32 +1,43 @@
 #pragma once
-#include "Process.h"
+#include "Process.h" // Тут знаходяться наші класи Phone, Tablet, Laptop
 #include <vector>
 #include <string>
 
 class ProductionSystem {
 private:
-    std::vector<AssemblyProcess> assemblies;
-    std::vector<TestingProcess> tests;
-    std::vector<PackagingProcess> packages;
+    std::vector<Phone> phones;
+    std::vector<Tablet> tablets;
+    std::vector<Laptop> laptops;
 
 public:
-    void addAssembly(const AssemblyProcess& a);
-    void addTesting(const TestingProcess& t);
-    void addPackaging(const PackagingProcess& p);
+    // --- Додавання товарів ---
+    void addPhone(const Phone& p);
+    void addTablet(const Tablet& t);
+    void addLaptop(const Laptop& l);
 
-    bool updateAssembly(const std::string& id, double duration, int workers, int partsCount, double assemblyTime, const std::string& tool);
-    bool updateTesting(const std::string& id, const std::string& status);
-    bool updatePackaging(const std::string& id, const std::string& design);
+    // --- Оновлення товарів (шукаємо за назвою/типом) ---
+    // Повертає true, якщо товар знайдено та оновлено
+    bool updatePhone(const std::string& originalType, double price, double screenSize, const std::string& simType, const std::string& battery);
+    bool updateTablet(const std::string& originalType, double price, const std::string& memory, const std::string& material, bool hasStylus);
+    bool updateLaptop(const std::string& originalType, double price, const std::string& keyboard, const std::string& audio, const std::string& wireless);
 
-    const std::vector<AssemblyProcess>& getAssemblies() const { return assemblies; }
-    const std::vector<TestingProcess>& getTests() const { return tests; }
-    const std::vector<PackagingProcess>& getPackages() const { return packages; }
+    // --- Гетери (відображення інформації про сутності) ---
+    const std::vector<Phone>& getPhones() const { return phones; }
+    const std::vector<Tablet>& getTablets() const { return tablets; }
+    const std::vector<Laptop>& getLaptops() const { return laptops; }
 
-    const AssemblyProcess* findAssemblyWithMaxDuration() const;
+    // --- Спеціальні методи пошуку (відповідно до завдання) ---
 
-    std::vector<PackagingProcess> findPackagingByCriteriaReturn(const std::string& type,
-        const std::string& materialSubstring) const;
+    // Метод для перевірки наявності телефонів на одну SIM-карту
+    std::vector<Phone> findSingleSimPhones() const;
 
+    // Метод для перевірки наявності стілуса (пошук планшетів зі стілусом)
+    std::vector<Tablet> findTabletsWithStylus() const;
+
+    // Метод для перевірки можливості використання Wi-Fi (пошук ноутбуків з Wi-Fi)
+    std::vector<Laptop> findLaptopsWithWifi() const;
+
+    // --- Файлові операції ---
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);
 };
